@@ -16,6 +16,8 @@ const Ads = () => {
       setAds([
         { flowerName: 'Paprad', src: '/assets/paprad.png' },
         { flowerName: 'Kvet', src: '/assets/paprad.png' },
+        { flowerName: 'Kvet 2 ', src: '/assets/paprad.png' },
+        { flowerName: 'Kvet 3', src: '/assets/paprad.png' },
       ]),
     [],
   );
