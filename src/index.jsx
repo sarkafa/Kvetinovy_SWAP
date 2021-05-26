@@ -15,7 +15,9 @@ import Categories from './Categories';
 const App = () => {
   return (
     <>
-      <Menu />
+      <div className="wrapper">
+        <Menu />
+      </div>
     </>
   );
 };
