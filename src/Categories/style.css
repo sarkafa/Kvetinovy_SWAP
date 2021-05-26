@@ -1,0 +1,5 @@
+.categories {
+  border: 1px solid black;
+  flex-basis: 20%;
+  height: 50vw;
+}

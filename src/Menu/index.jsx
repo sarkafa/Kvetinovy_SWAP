@@ -3,6 +3,7 @@ import './style.css';
 import MyFlowers from '.././MyFlowers';
 import Ads from '.././Ads';
 import Wishlist from '.././Wishlist';
+import Categories from '../Categories/index';
 
 import {
   BrowserRouter as Router,
@@ -50,7 +51,10 @@ const Menu = () => {
 
       <Switch>
         <Route exact path="/">
-          <Ads />
+          <div className="container">
+            <Categories />
+            <Ads />
+          </div>
         </Route>
         <Route path="/myflowers">
           <MyFlowers />

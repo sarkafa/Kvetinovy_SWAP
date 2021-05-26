@@ -1,0 +1,11 @@
+.ad__picture {
+  width: 70px;
+  height: 70px;
+}
+.ad {
+  padding: 1%;
+  text-align: center;
+  border: 1px solid black;
+  width: 150px;
+  height: 150px;
+}

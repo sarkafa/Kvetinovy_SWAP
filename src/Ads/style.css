@@ -1,0 +1,9 @@
+.ads-list {
+  border: 1px solid green;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.ads__ad {
+  flex-basis: 20%;
+}
