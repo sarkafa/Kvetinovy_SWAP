@@ -1,6 +1,6 @@
 .menu {
   display: flex;
-  max-width: 960px;
+  max-width: 100%;
   margin: auto;
   justify-content: space-between;
   padding-top: 10px;

@@ -14,7 +14,9 @@ import {
 const App = () => {
   return (
     <>
-      <Menu />
+      <div className="wrapper">
+        <Menu />
+      </div>
     </>
   );
 };
