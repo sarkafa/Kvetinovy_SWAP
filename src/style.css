@@ -15,6 +15,13 @@ html {
 }
 
 .wrapper {
-  width: 1280px;
+  max-width: 80%;
+
   margin: auto;
+}
+
+@media (min-width: 480px) {
+}
+
+@media (min-width: 768px) {
 }

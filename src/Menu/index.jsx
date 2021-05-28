@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import './style.css';
-import MyFlowers from '.././MyFlowers';
-import Ads from '.././Ads';
-import Wishlist from '.././Wishlist';
+import MyFlowers from '../MyFlowers';
+import Ads from '../Ads';
+import Wishlist from '../Wishlist';
+import FotoUpload from '../FotoUpload';
 
 import {
   BrowserRouter as Router,
@@ -19,25 +20,24 @@ const Menu = () => {
           <NavLink exact to="/"></NavLink>
         </div>
 
-        <div className="menu__tabs">
-          <ul>
-            <li>
-              <NavLink exact to="/" activeClassName="selected">
-                INZERÁTY
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/myflowers" activeClassName="selected">
-                MOJE KVĚTINY
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/wishlist" activeClassName="selected">
-                WISHLIST
-              </NavLink>
-            </li>
-          </ul>
-        </div>
+        <ul className="menu__tabs">
+          <li>
+            <NavLink exact to="/" activeClassName="selected">
+              INZERÁTY
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/myflowers" activeClassName="selected">
+              MÉ KVĚTINY
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/wishlist" activeClassName="selected">
+              WISHLIST
+            </NavLink>
+          </li>
+        </ul>
+
         <div className="user">
           <div className="user__name">
             <NavLink to="/myflowers">Anicka Nova</NavLink>
@@ -51,6 +51,7 @@ const Menu = () => {
       <Switch>
         <Route exact path="/">
           <Ads />
+          <FotoUpload />
         </Route>
         <Route path="/myflowers">
           <MyFlowers />
