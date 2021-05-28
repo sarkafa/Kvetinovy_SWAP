@@ -4,6 +4,7 @@ import MyFlowers from '../MyFlowers';
 import Ads from '../Ads';
 import Wishlist from '../Wishlist';
 import FotoUpload from '../FotoUpload';
+import Categories from '../Categories';
 
 import {
   BrowserRouter as Router,
