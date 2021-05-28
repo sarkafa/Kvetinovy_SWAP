@@ -50,8 +50,10 @@ const Menu = () => {
 
       <Switch>
         <Route exact path="/">
-          <Ads />
-          <FotoUpload />
+          <div className="container">
+            <Categories />
+            <Ads />
+          </div>
         </Route>
         <Route path="/myflowers">
           <MyFlowers />
