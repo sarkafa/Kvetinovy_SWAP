@@ -2,13 +2,26 @@
   max-width: 170px;
   object-fit: cover;
   vertical-align: middle;
+  flex-basis: 30%;
+}
+
+.ad__picture img {
+  height: auto;
+  width: 100%;
 }
 
 .ad {
   padding: 1%;
   text-align: center;
   border: 1px solid black;
-  min-width: 250px;
+  min-width: 500px;
   flex-grow: 1;
   height: 250px;
+  display: flex;
+}
+
+.ad__description {
+  text-align: left;
+  flex-basis: 70%;
+  padding: 0 5%;
 }
