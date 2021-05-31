@@ -43,6 +43,11 @@ export const Ads = () => {
         {categories.map((category) => (
           <Categories category={category} />
         ))}
+        <p>Match</p>
+        <label class="switch">
+          <input type="checkbox" />
+          <span class="slider round"></span>
+        </label>
       </div>
       <div className="ads__container">
         {ads.map((ad) => (
