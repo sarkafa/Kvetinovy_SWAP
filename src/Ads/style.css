@@ -1,3 +1,8 @@
+.ads {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
 .ads__categories {
   border: 1px solid black;
   flex-basis: 20%;

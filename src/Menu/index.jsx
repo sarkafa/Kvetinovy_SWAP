@@ -4,6 +4,7 @@ import MyFlowers from '../MyFlowers';
 import { Ads } from '../Ads';
 import Wishlist from '../Wishlist';
 import FotoUpload from '../FotoUpload';
+import AdDetail from '../AdDetail';
 
 import {
   BrowserRouter as Router,
@@ -50,10 +51,9 @@ const Menu = () => {
 
       <Switch>
         <Route exact path="/">
-          <div className="container">
-            <Ads />
-          </div>
+          <Ads />
         </Route>
+        <Route path="/detail/:id" children={<AdDetail />}></Route>
         <Route path="/myflowers">
           <MyFlowers />
         </Route>
