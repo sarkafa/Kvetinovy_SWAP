@@ -11,7 +11,7 @@ import {
   NavLink,
 } from 'react-router-dom';
 import Ads from './Ads/index';
-import Categories from './Categories';
+
 const App = () => {
   return (
     <>

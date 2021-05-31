@@ -1,9 +1,22 @@
-.ads-list {
+.ads__categories {
+  border: 1px solid black;
+  flex-basis: 20%;
+}
+
+.ads__container {
   border: 1px solid green;
   display: flex;
+  flex-basis: 80%;
   flex-wrap: wrap;
   justify-content: space-between;
 }
-.ads__ad {
-  flex-basis: 20%;
+
+.category__label {
+  flex-basis: 100%;
+  display: block;
+  padding: 5px 0;
+}
+
+.ads__categories p {
+  font-weight: bold;
 }

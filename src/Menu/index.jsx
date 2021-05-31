@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import './style.css';
 import MyFlowers from '../MyFlowers';
-import Ads from '../Ads';
+import { Ads } from '../Ads';
 import Wishlist from '../Wishlist';
 import FotoUpload from '../FotoUpload';
-import Categories from '../Categories';
 
 import {
   BrowserRouter as Router,
@@ -52,7 +51,6 @@ const Menu = () => {
       <Switch>
         <Route exact path="/">
           <div className="container">
-            <Categories />
             <Ads />
           </div>
         </Route>
