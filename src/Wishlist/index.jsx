@@ -3,72 +3,82 @@ import './style.css';
 import { db, storage } from './../firebase';
 
 const Wishlist = () => {
-  const [filename, setFilename] = useState('Pridejte kyku do wishlistu...');
-  const [fileUrl, setFileUrl] = useState(null);
-  const [users, setUsers] = useState([]);
+  const [open, setOpen] = useState(false);
 
-  const onFileChange = (e) => {
-    const file = e.target.files[0];
-    const storageRef = storage.ref();
-    const fileRef = storageRef.child(file.name);
-    fileRef.put(file).then(() => {
-      console.log('Uploaded file', file.name);
-    });
+  const [soubor, setSoubor] = useState();
+  const [popis, setPopis] = useState('');
+  const [fotky, setFotky] = useState([]);
 
-    setFilename(`Nahraná kytka: ${e.target.value.split('\\').pop()}`);
+  useEffect(() =>
+    db.collection('fotky').onSnapshot((snapshot) => {
+      setFotky(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    }),
+  );
+
+  const nahrajNaFirebase = (event) => {
+    event.preventDefault();
+    if (!soubor) {
+      return;
+    }
+    storage
+      .ref(`/obrazky/${soubor.name}`)
+      .put(soubor)
+      .then((snapshot) => snapshot.ref.getDownloadURL())
+      .then((urlNahranehoObrazku) => {
+        db.collection('users')
+          .doc('YpadprYKCHbtd91y02hL')
+          .collection('wishlist')
+          .add({
+            url: urlNahranehoObrazku,
+            name: popis,
+          });
+        setPopis('');
+      });
   };
 
-  //   const username = e.target.username.value;
-  //   // if (!username) {
-  //   //   return;
-  //   // }
-  //   db.collection('users')
-  //     .doc(username)
-  //     .set({ name: username, avatar: fileUrl });
-
-  // useEffect(() => {
-  //   const fetchUser = async () => {
-  //     const usersCollection = await db.collection('users').get();
-  //     setUsers(
-  //       usersCollection.docs.map((doc) => {
-  //         return doc.data();
-  //       }),
-  //     );
-  //   };
-  //   fetchUser(), [];
-  // });
-  // .then(() => {
-  //   console.log('Uploaded file', file.name);
-  //       });
   return (
     <>
-      <input
-        type="file"
-        name="file"
-        id="file"
-        className="inputfile"
-        onChange={onFileChange}
-      />
-      <label for="file">
-        <div>{filename}</div>
-
+      <button onClick={() => setOpen(!open)} className="btn--open">
+        Přidej kytku
         <img src="/assets/cross.svg" alt="" />
-      </label>
+      </button>
 
-      <br />
-      <br />
-      <div>
-        {/* <ul>
-          {users.map((user) => {
-            return (
-              <li>
-                <img width="100" height="100" src={user.avatar} alt="" />
-                <p>{user.name}</p>
-              </li>
-            );
-          })}
-        </ul> */}
-      </div>
+      {open && (
+        <div className="popup">
+          <div className="popup__inner">
+            <button className="btn--close" onClick={() => setOpen(!open)}>
+              X
+            </button>
+            <h4>Vyber fotku tvé vysněné kytky z úložiště a její jméno.</h4>
+            <form onSubmit={nahrajNaFirebase}>
+              <label>
+                Název květiny:
+                <input
+                  value={popis}
+                  onChange={(event) => setPopis(event.target.value)}
+                />
+              </label>
+              <input
+                type="file"
+                className="form__file"
+                onChange={(event) => setSoubor(event.target.files[0])}
+              />
+
+              <button>Nahrát</button>
+            </form>
+            <p>Nahrané fotky</p>
+            <ul>
+              {fotky.map((fotka) => (
+                <li>
+                  {fotka.popis}
+                  <br />
+                  <img src={fotka.url} height="50" alt="" />
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      )}
     </>
   );
 };

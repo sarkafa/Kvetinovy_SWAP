@@ -1,6 +1,7 @@
 .ad__picture {
   max-width: 170px;
   object-fit: cover;
+  height: 100%;
   vertical-align: middle;
   flex-basis: 30%;
 }
