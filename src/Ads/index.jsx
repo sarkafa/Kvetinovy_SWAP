@@ -29,28 +29,40 @@ export const Ads = () => {
     () =>
       setAds([
         {
-          flowerName: 'Paprad',
+          flowerNameCZ: 'Fíkus',
+          flowerNameL: 'Ficus',
+          flowerNameC: '',
           src: '/assets/paprad.png',
           id: '1',
           description: 'Kytka je v uzasnem stavu.',
+          category: 'Nekvetoucí',
         },
         {
-          flowerName: 'Kvet',
+          flowerNameCZ: 'Spící panna',
+          flowerNameL: 'Aglaonema commutatum',
+          flowerNameC: '',
           src: '/assets/paprad.png',
           id: '2',
           description: 'Kytka je trochu sesla.',
+          category: 'Nekvetoucí',
         },
         {
-          flowerName: 'Kvet 2 ',
+          flowerNameCZ: 'Kávovník',
+          flowerNameL: 'Coffea arabica',
+          flowerNameC: '',
           src: '/assets/paprad.png',
           id: '3',
           description: 'Kytka je prave rozkvetla. Zkrášlí vám byt.',
+          category: 'Nekvetoucí',
         },
         {
-          flowerName: 'Kvet 3',
+          flowerNameCZ: 'Pryšec nádherný',
+          flowerNameL: 'Euphorbia pulcherrima',
+          flowerNameC: 'Vánoční hvězda',
           src: '/assets/paprad.png',
           id: '4',
           description: 'Kytička náramně nahradí domácího mazlíčka.',
+          category: 'Nekvetoucí',
         },
       ]),
     [],
@@ -73,11 +85,14 @@ export const Ads = () => {
         <div className="ads__container">
           {ads.map((ad) => (
             <Ad
-              key={ad.flowerName}
-              flowerName={ad.flowerName}
+              key={ad.id}
+              flowerNameCZ={ad.flowerNameCZ}
+              flowerNameL={ad.flowerNameL}
+              flowerNameC={ad.flowerNameC}
               src={ad.src}
               id={ad.id}
               description={ad.description}
+              category={ad.category}
             />
           ))}
         </div>
