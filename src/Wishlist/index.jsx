@@ -10,10 +10,17 @@ const Wishlist = () => {
   const [fotky, setFotky] = useState([]);
 
   useEffect(() =>
-    db.collection('fotky').onSnapshot((snapshot) => {
-      setFotky(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    }),
+    db
+      .collection('users')
+      .doc('YpadprYKCHbtd91y02hL')
+      .collection('wishlist')
+      .onSnapshot((snapshot) => {
+        setFotky(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      }),
   );
+  {
+    console.log(popis);
+  }
 
   const nahrajNaFirebase = (event) => {
     event.preventDefault();
@@ -70,7 +77,7 @@ const Wishlist = () => {
             <ul>
               {fotky.map((fotka) => (
                 <li>
-                  {fotka.popis}
+                  {fotka.name}
                   <br />
                   <img src={fotka.url} height="50" alt="" />
                 </li>

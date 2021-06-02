@@ -21,6 +21,7 @@
   text-align: center;
   font-weight: bold;
   flex-grow: 1;
+  display: flex;
 }
 
 .menu a {
