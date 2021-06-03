@@ -4,7 +4,21 @@
   border: 1px solid black;
   min-width: 150px;
   flex-grow: 1;
+
   height: 250px;
-  display: flex;
-  flex-basis: 33.3%;
+}
+
+.wishlist__item img {
+  max-width: 170px;
+  object-fit: cover;
+  height: 90%;
+
+  vertical-align: middle;
+  flex-basis: 30%;
+}
+
+.wishlist__item p {
+  height: 10%;
+  margin: 0;
+  font-weight: bold;
 }

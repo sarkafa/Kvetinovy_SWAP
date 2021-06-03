@@ -10,7 +10,7 @@ const WishlistItem = ({ url, name }) => {
 
   return (
     <div className="wishlist__item">
-      <h3 className="wishlist__name">{name}</h3>
+      <p className="wishlist__name">{name}</p>
       <img src={url} />
     </div>
   );
