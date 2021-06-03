@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import './style.css';
-import MyFlowers from '../MyFlowers';
+import { MyFlowers } from '../MyFlowers';
 import { Ads } from '../Ads';
 import Wishlist from '../Wishlist';
-import FotoUpload from '../FotoUpload';
+
 import AdDetail from '../AdDetail';
 
 import {

@@ -3,8 +3,7 @@ import './style.css';
 
 import { Router, Route, NavLink, Switch } from 'react-router-dom';
 import Ad from '../Ad/index';
-
-const categories = ['Kvetoucí', 'Popínavé', 'Sukulenty', 'Řasokoule'];
+import { categories } from '.././categories';
 
 const Categories = ({ category }) => {
   return (
