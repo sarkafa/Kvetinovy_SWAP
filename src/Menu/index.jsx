@@ -13,6 +13,27 @@ import {
   Switch,
 } from 'react-router-dom';
 
+const PrivateRoute = ({ children, ...rest }) => {
+  let auth = useAuth();
+  return (
+    <Route
+      {...rest}
+      render={({ location }) =>
+        auth.user ? (
+          children
+        ) : (
+          <Redirect
+            to={{
+              pathname: '/login',
+              state: { from: location },
+            }}
+          />
+        )
+      }
+    />
+  );
+};
+
 const Menu = () => {
   return (
     <Router>
