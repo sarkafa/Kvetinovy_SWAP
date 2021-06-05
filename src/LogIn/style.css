@@ -1,0 +1,12 @@
+.login__container {
+  display: flex;
+}
+.webDescription {
+  flex-basis: 50%;
+}
+.webDescription img {
+  width: 300px;
+}
+.formular {
+  flex-basis: 50%;
+}
