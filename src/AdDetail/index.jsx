@@ -2,15 +2,10 @@ import React, { useState } from 'react';
 import './style.css';
 import { useParams } from 'react-router-dom';
 
-const Ad = ({}) => {
+const AdDetail = ({}) => {
   let { id } = useParams();
   console.log(id);
   const [detail, setDetail] = useState(null);
-  /*useEffect(() => {
-    fetch(`https://id=${id}`)
-      .then((response) => response.json())
-      .then((json) => setDetail(json.data));
-  }, []);*/
 
   return (
     <div className="ad__detail">
@@ -30,4 +25,4 @@ const Ad = ({}) => {
     </div>
   );
 };
-export default Ad;
+export default AdDetail;

@@ -2,14 +2,7 @@ import React from 'react';
 import './style.css';
 import { useHistory } from 'react-router-dom';
 
-const Ad = ({
-  src,
-  id,
-  description,
-  flowerNameCZ,
-  flowerNameL,
-  flowerNameC,
-}) => {
+const Ad = ({ url, id, category, flowerNameCZ }) => {
   let history = useHistory();
   const handleClick = () => {
     history.push(`/detail/${id}`);
@@ -18,13 +11,11 @@ const Ad = ({
   return (
     <div className="ad" onClick={handleClick}>
       <div className="ad__picture">
-        <img src={`/assets/${id}.jpg`} />
+        <img src={url} />
       </div>
       <div className="ad__description">
-        <h3 className="ad__name--cz">{flowerNameCZ}</h3>
-        <h4 className="ad__name--l">{flowerNameL}</h4>
-        <h5 className="ad__name--c">{flowerNameC}</h5>
-        <p>{description}</p>
+        <h3 className="ad__name">{flowerNameCZ}</h3>
+        <div>. {category}</div>
       </div>
     </div>
   );

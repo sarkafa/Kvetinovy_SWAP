@@ -1,10 +1,10 @@
-.ad__picture {
+.item__picture {
   height: 80%;
   object-fit: cover;
   vertical-align: middle;
 }
 
-.ad__picture img {
+.item__picture img {
   height: auto;
   width: 100%;
   max-width: 170px;
@@ -14,7 +14,7 @@
   flex-basis: 30%;
 }
 
-.ad {
+.item {
   padding: 1%;
   text-align: center;
   /* border: 1px solid black; */
@@ -23,10 +23,10 @@
   height: 275px;
 }
 
-.ad:hover {
+.item:hover {
   border-bottom: 5px solid #e6c229;
 }
 
-.ad__name {
+.item__name {
   margin: 5px 0;
 }

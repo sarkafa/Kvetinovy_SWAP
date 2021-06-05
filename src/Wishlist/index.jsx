@@ -1,17 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import './style.css';
 import { db, storage } from './../firebase';
+import { categories } from '.././categories';
+import { flowers } from '.././flowers';
 import firebase from 'firebase';
-import WishlistItem from './../WishlistItem';
 
-const Wishlist = () => {
+import FlowerItem from '../FlowerItem';
+
+const Options = ({ name }) => {
+  return (
+    <>
+      <option value={name}>{name}</option>
+    </>
+  );
+};
+
+export const Wishlist = () => {
   const [open, setOpen] = useState(false);
   const [file, setFile] = useState();
-  const [photoName, setPhotoName] = useState('');
+  const [photoNameCZ, setPhotoNameCZ] = useState('');
+  const [photoDescription, setPhotoDescription] = useState('');
+  const [photoCategory, setPhotoCategory] = useState('Vyberte');
   const [photos, setPhotos] = useState([]);
   const [newPhotos, setNewPhotos] = useState(0);
 
-  console.log(`new kytky:${newPhotos}`);
+  console.log(photos);
 
   useEffect(() => {
     const resetAfterSnapshot = db
@@ -23,11 +36,7 @@ const Wishlist = () => {
         setPhotos(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
       });
     return resetAfterSnapshot;
-  });
-
-  {
-    console.log(photoName);
-  }
+  }, []);
 
   const loadToFirebase = (event) => {
     event.preventDefault();
@@ -38,7 +47,7 @@ const Wishlist = () => {
     setNewPhotos(newPhotos + 1);
 
     storage
-      .ref(`/flowers/${file.name}`)
+      .ref(`/wishlist/${file.name}`)
       .put(file)
       .then((snapshot) => snapshot.ref.getDownloadURL())
       .then((urlLoadedFile) => {
@@ -47,23 +56,32 @@ const Wishlist = () => {
           .collection('wishlist')
           .add({
             url: urlLoadedFile,
-            name: photoName,
+            nameCZ: photoNameCZ,
+            description: photoDescription,
+            category: photoCategory,
             timeStamp: firebase.firestore.FieldValue.serverTimestamp(),
           });
-        setPhotoName('');
-      });
+        setPhotoNameCZ('');
+      }, []);
   };
 
   return (
     <>
-      <div className="wishlist">
+      <div className="container">
         <button onClick={() => setOpen(!open)} className="btn--open">
           Přidej kytku
           <img src="/assets/cross.svg" alt="" />
         </button>
 
         {photos.map((photo) => (
-          <WishlistItem name={photo.name} url={photo.url} />
+          <FlowerItem
+            key={photo.id}
+            flowerNameCZ={photo.nameCZ}
+            url={photo.url}
+            description={photo.description}
+            category={photo.category}
+            key={photo.nameCZ}
+          />
         ))}
       </div>
 
@@ -86,18 +104,53 @@ const Wishlist = () => {
             <form onSubmit={loadToFirebase}>
               <label>
                 Název květiny:
+                <select
+                  value={photoNameCZ}
+                  onChange={(event) => setPhotoNameCZ(event.target.value)}
+                >
+                  <option value="Vyberte">Vyberte</option>
+                  {flowers.map((flower) => (
+                    <Options name={flower} />
+                  ))}
+                </select>
+              </label>
+
+              <label>
+                Popis kytky:
                 <input
-                  value={photoName}
-                  onChange={(event) => setPhotoName(event.target.value)}
+                  value={photoDescription}
+                  onChange={(event) => setPhotoDescription(event.target.value)}
                 />
               </label>
+
+              <label>
+                Kategorie:
+                <select
+                  value={photoCategory}
+                  onChange={(event) => setPhotoCategory(event.target.value)}
+                >
+                  <option value="Vyberte">Vyberte</option>
+                  {categories.map((category) => (
+                    <Options name={category} />
+                  ))}
+                </select>
+              </label>
+
               <input
                 type="file"
                 className="form__file"
                 onChange={(event) => setFile(event.target.files[0])}
               />
 
-              <button>Nahrát</button>
+              <button
+                disabled={
+                  photoCategory === 'Vyberte' ||
+                  photoNameCZ === 'Vyberte' ||
+                  photoDescription === ''
+                }
+              >
+                Nahrát
+              </button>
             </form>
             {newPhotos !== 0 && (
               <>
@@ -105,7 +158,7 @@ const Wishlist = () => {
                 <ul>
                   {photos.slice(0, newPhotos).map((photo) => (
                     <li>
-                      {photo.name}
+                      {photo.nameCZ}
                       <br />
                       <img src={photo.url} height="50" alt="" />
                     </li>
@@ -119,13 +172,3 @@ const Wishlist = () => {
     </>
   );
 };
-
-// {photos.map((fotka) => (
-//   <li>
-//     {fotka.name}
-//     <br />
-//     <img src={fotka.url} height="50" alt="" />
-//   </li>
-// ))}
-
-export default Wishlist;

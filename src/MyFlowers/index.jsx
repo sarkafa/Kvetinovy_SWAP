@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './style.css';
-import MyFlowerItem from './../MyFlowerItem';
+import FlowerItem from './../FlowerItem';
 import { categories } from '.././categories';
-import { auth, db, storage } from './../firebase';
+import { db, storage } from './../firebase';
 import firebase from 'firebase';
 
 const CategoryOptions = ({ name }) => {
@@ -14,14 +14,9 @@ const CategoryOptions = ({ name }) => {
 };
 
 export const MyFlowers = () => {
-  const [email, setEmail] = useState(null);
-  const [password, setPassword] = useState(null);
-
   const [open, setOpen] = useState(false);
   const [file, setFile] = useState();
   const [photoNameCZ, setPhotoNameCZ] = useState('');
-  const [photoNameL, setPhotoNameL] = useState('');
-  const [photoNameC, setPhotoNameC] = useState('');
   const [photoDescription, setPhotoDescription] = useState('');
   const [photoCategory, setPhotoCategory] = useState('Vyberte');
   const [photos, setPhotos] = useState([]);
@@ -39,11 +34,7 @@ export const MyFlowers = () => {
         setPhotos(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
       });
     return resetAfterSnapshot;
-  });
-
-  {
-    console.log(photoNameCZ);
-  }
+  }, []);
 
   const loadToFirebase = (event) => {
     event.preventDefault();
@@ -54,42 +45,44 @@ export const MyFlowers = () => {
     setNewPhotos(newPhotos + 1);
 
     storage
-      .ref(`/flowers/${file.name}`)
+      .ref(`/myFlowers/${file.name}`)
       .put(file)
       .then((snapshot) => snapshot.ref.getDownloadURL())
       .then((urlLoadedFile) => {
+        const ad = {
+          url: urlLoadedFile,
+          nameCZ: photoNameCZ,
+          description: photoDescription,
+          category: photoCategory,
+          user: 'YpadprYKCHbtd91y02hL',
+          timeStamp: firebase.firestore.FieldValue.serverTimestamp(),
+        };
         db.collection('users')
           .doc('YpadprYKCHbtd91y02hL')
           .collection('myFlowers')
-          .add({
-            url: urlLoadedFile,
-            nameCZ: photoNameCZ,
-            nameL: photoNameL,
-            nameC: photoNameC,
-            description: photoDescription,
-            category: photoCategory,
-            timeStamp: firebase.firestore.FieldValue.serverTimestamp(),
-          });
+          .add(ad);
+        db.collection('ads').add(ad);
+
         setPhotoName('');
       });
   };
 
   return (
     <>
-      <div className="myFlowers">
+      <div className="container">
         <button onClick={() => setOpen(!open)} className="btn--open">
           Přidej kytku
           <img src="/assets/cross.svg" alt="" />
         </button>
 
         {photos.map((photo) => (
-          <MyFlowerItem
+          <FlowerItem
+            key={photo.id}
             flowerNameCZ={photo.nameCZ}
-            flowerNameL={photo.nameL}
-            flowerNameC={photo.nameC}
             url={photo.url}
             description={photo.description}
             category={photo.category}
+            key={photo.nameCZ}
           />
         ))}
       </div>
@@ -111,29 +104,19 @@ export const MyFlowers = () => {
             </h4>
             <form onSubmit={loadToFirebase}>
               <label>
-                Český název květiny:
-                <input
+                Název květiny:
+                <select
                   value={photoNameCZ}
                   onChange={(event) => setPhotoNameCZ(event.target.value)}
-                />
+                >
+                  <option value="Vyberte">Vyberte</option>
+                  {flowers.map((flower) => (
+                    <Options name={flower} />
+                  ))}
+                </select>
               </label>
               <label>
-                Latinský název květiny:
-                <input
-                  value={photoNameL}
-                  onChange={(event) => setPhotoNameL(event.target.value)}
-                />
-              </label>
-
-              <label>
-                Běžný název květiny:
-                <input
-                  value={photoNameC}
-                  onChange={(event) => setPhotoNameC(event.target.value)}
-                />
-              </label>
-              <label>
-                Popis inzerátu:
+                Popis kytky:
                 <input
                   value={photoDescription}
                   onChange={(event) => setPhotoDescription(event.target.value)}
@@ -148,7 +131,7 @@ export const MyFlowers = () => {
                 >
                   <option value="Vyberte">Vyberte</option>
                   {categories.map((category) => (
-                    <CategoryOptions name={category.name} />
+                    <CategoryOptions name={category} key={category} />
                   ))}
                 </select>
               </label>
@@ -158,11 +141,19 @@ export const MyFlowers = () => {
                 onChange={(event) => setFile(event.target.files[0])}
               />
 
-              <button>Nahrát</button>
+              <button
+                disabled={
+                  photoCategory === 'Vyberte' ||
+                  photoNameCZ === 'Vyberte' ||
+                  photoDescription === ''
+                }
+              >
+                Nahrát
+              </button>
             </form>
             {newPhotos !== 0 && (
               <>
-                <p>Nahrané fotky</p>
+                <p>Nahrané kytky</p>
                 <ul>
                   {photos.slice(0, newPhotos).map((photo) => (
                     <li>

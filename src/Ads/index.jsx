@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './style.css';
-
 import { Router, Route, NavLink, Switch } from 'react-router-dom';
+import { db, storage } from './../firebase';
 import Ad from '../Ad/index';
 import { categories } from '.././categories';
 
@@ -19,53 +19,15 @@ const Categories = ({ category }) => {
 export const Ads = () => {
   const [ads, setAds] = useState([]);
 
-  /*useEffect(()=>{
-    fetch(``)
-    .then(response => response.json())
-    .then(json=> setAds(json.data));
-  }, []);*/
-  useEffect(
-    () =>
-      setAds([
-        {
-          flowerNameCZ: 'Fíkus',
-          flowerNameL: 'Ficus',
-          flowerNameC: '',
-          src: '/assets/paprad.png',
-          id: '1',
-          description: 'Kytka je v uzasnem stavu.',
-          category: 'Nekvetoucí',
-        },
-        {
-          flowerNameCZ: 'Spící panna',
-          flowerNameL: 'Aglaonema commutatum',
-          flowerNameC: '',
-          src: '/assets/paprad.png',
-          id: '2',
-          description: 'Kytka je trochu sesla.',
-          category: 'Nekvetoucí',
-        },
-        {
-          flowerNameCZ: 'Kávovník',
-          flowerNameL: 'Coffea arabica',
-          flowerNameC: '',
-          src: '/assets/paprad.png',
-          id: '3',
-          description: 'Kytka je prave rozkvetla. Zkrášlí vám byt.',
-          category: 'Nekvetoucí',
-        },
-        {
-          flowerNameCZ: 'Pryšec nádherný',
-          flowerNameL: 'Euphorbia pulcherrima',
-          flowerNameC: 'Vánoční hvězda',
-          src: '/assets/paprad.png',
-          id: '4',
-          description: 'Kytička náramně nahradí domácího mazlíčka.',
-          category: 'Nekvetoucí',
-        },
-      ]),
-    [],
-  );
+  useEffect(() => {
+    const resetAfterSnapshot = db
+      .collection('ads')
+      .orderBy('timeStamp', 'desc')
+      .onSnapshot((snapshot) => {
+        setAds(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      });
+    return resetAfterSnapshot;
+  }, []);
 
   return (
     <>
@@ -73,7 +35,7 @@ export const Ads = () => {
         <div className="ads__categories">
           <p>Kategorie</p>
           {categories.map((category) => (
-            <Categories category={category} />
+            <Categories category={category} key={category} />
           ))}
           <p>Match</p>
           <label className="switch">
@@ -84,14 +46,11 @@ export const Ads = () => {
         <div className="ads__container">
           {ads.map((ad) => (
             <Ad
-              key={ad.id}
-              flowerNameCZ={ad.flowerNameCZ}
-              flowerNameL={ad.flowerNameL}
-              flowerNameC={ad.flowerNameC}
-              src={ad.src}
-              id={ad.id}
+              flowerNameCZ={ad.nameCZ}
+              url={ad.url}
               description={ad.description}
               category={ad.category}
+              key={ad.nameCZ}
             />
           ))}
         </div>

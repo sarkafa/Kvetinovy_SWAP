@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './style.css';
 import { MyFlowers } from '../MyFlowers';
 import { Ads } from '../Ads';
-import Wishlist from '../Wishlist';
+import { Wishlist } from '../Wishlist';
 
 import AdDetail from '../AdDetail';
 
