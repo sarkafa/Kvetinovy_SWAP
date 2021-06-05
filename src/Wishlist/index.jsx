@@ -7,14 +7,6 @@ import firebase from 'firebase';
 
 import FlowerItem from '../FlowerItem';
 
-const Options = ({ name }) => {
-  return (
-    <>
-      <option value={name}>{name}</option>
-    </>
-  );
-};
-
 export const Wishlist = () => {
   const [open, setOpen] = useState(false);
   const [file, setFile] = useState();
@@ -80,7 +72,6 @@ export const Wishlist = () => {
             url={photo.url}
             description={photo.description}
             category={photo.category}
-            key={photo.nameCZ}
           />
         ))}
       </div>
@@ -110,7 +101,7 @@ export const Wishlist = () => {
                 >
                   <option value="Vyberte">Vyberte</option>
                   {flowers.map((flower) => (
-                    <Options name={flower} />
+                    <option value={flower}>{flower}</option>
                   ))}
                 </select>
               </label>
@@ -131,7 +122,7 @@ export const Wishlist = () => {
                 >
                   <option value="Vyberte">Vyberte</option>
                   {categories.map((category) => (
-                    <Options name={category} />
+                    <option value={category}>{category}</option>
                   ))}
                 </select>
               </label>

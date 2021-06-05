@@ -4,8 +4,9 @@ import FlowerItem from './../FlowerItem';
 import { categories } from '.././categories';
 import { db, storage } from './../firebase';
 import firebase from 'firebase';
+import { flowers } from '.././flowers';
 
-const CategoryOptions = ({ name }) => {
+const Options = ({ name }) => {
   return (
     <>
       <option value={name}>{name}</option>
@@ -82,7 +83,6 @@ export const MyFlowers = () => {
             url={photo.url}
             description={photo.description}
             category={photo.category}
-            key={photo.nameCZ}
           />
         ))}
       </div>
@@ -111,7 +111,7 @@ export const MyFlowers = () => {
                 >
                   <option value="Vyberte">Vyberte</option>
                   {flowers.map((flower) => (
-                    <Options name={flower} />
+                    <option value={flower}>{flower}</option>
                   ))}
                 </select>
               </label>
@@ -131,7 +131,7 @@ export const MyFlowers = () => {
                 >
                   <option value="Vyberte">Vyberte</option>
                   {categories.map((category) => (
-                    <CategoryOptions name={category} key={category} />
+                    <option value={category}>{category}</option>
                   ))}
                 </select>
               </label>
