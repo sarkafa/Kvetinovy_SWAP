@@ -5,11 +5,11 @@ import { db, storage } from './../firebase';
 import Ad from '../Ad/index';
 import { categories } from '.././categories';
 
-const Categories = ({ category }) => {
+const Categories = ({ category, onClick }) => {
   return (
     <>
       <label className="category__label">
-        <input name="category" type="radio" />
+        <input name="category" type="radio" onChange={onClick} />
         {category}
       </label>
     </>
@@ -18,16 +18,23 @@ const Categories = ({ category }) => {
 
 export const Ads = () => {
   const [ads, setAds] = useState([]);
+  const [categoryValue, setCategoryValue] = useState(null);
 
   useEffect(() => {
-    const resetAfterSnapshot = db
-      .collection('ads')
-      .orderBy('timeStamp', 'desc')
-      .onSnapshot((snapshot) => {
-        setAds(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-      });
+    let resetAfterSnapshot = db.collection('ads');
+    if (categoryValue !== null) {
+      resetAfterSnapshot = resetAfterSnapshot.where(
+        'category',
+        '==',
+        categoryValue,
+      );
+    }
+
+    resetAfterSnapshot.orderBy('timeStamp', 'desc').onSnapshot((snapshot) => {
+      setAds(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    });
     return resetAfterSnapshot;
-  }, []);
+  }, [categoryValue]);
 
   console.log(ads);
 
@@ -36,8 +43,20 @@ export const Ads = () => {
       <div className="ads">
         <div className="ads__categories">
           <p>Kategorie</p>
+          <Categories
+            category="Všechny"
+            onClick={() => {
+              setCategoryValue(null);
+            }}
+          />
           {categories.map((category) => (
-            <Categories category={category} key={category} />
+            <Categories
+              category={category}
+              key={category}
+              onClick={() => {
+                setCategoryValue(category);
+              }}
+            />
           ))}
           <p>Match</p>
           <label className="switch">
