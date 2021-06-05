@@ -29,6 +29,8 @@ export const Ads = () => {
     return resetAfterSnapshot;
   }, []);
 
+  console.log(ads);
+
   return (
     <>
       <div className="ads">
@@ -50,7 +52,8 @@ export const Ads = () => {
               url={ad.url}
               description={ad.description}
               category={ad.category}
-              key={ad.nameCZ}
+              key={ad.id}
+              id={ad.id}
             />
           ))}
         </div>

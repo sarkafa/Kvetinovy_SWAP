@@ -14,14 +14,12 @@ export const Wishlist = () => {
   const [photoDescription, setPhotoDescription] = useState('');
   const [photoCategory, setPhotoCategory] = useState('Vyberte');
   const [photos, setPhotos] = useState([]);
-  const [newPhotos, setNewPhotos] = useState(0);
-
-  console.log(photos);
+  const user = firebase.auth().currentUser;
 
   useEffect(() => {
     const resetAfterSnapshot = db
       .collection('users')
-      .doc('YpadprYKCHbtd91y02hL')
+      .doc(user.uid)
       .collection('wishlist')
       .orderBy('timeStamp', 'desc')
       .onSnapshot((snapshot) => {
@@ -36,23 +34,18 @@ export const Wishlist = () => {
       return;
     }
 
-    setNewPhotos(newPhotos + 1);
-
     storage
       .ref(`/wishlist/${file.name}`)
       .put(file)
       .then((snapshot) => snapshot.ref.getDownloadURL())
       .then((urlLoadedFile) => {
-        db.collection('users')
-          .doc('YpadprYKCHbtd91y02hL')
-          .collection('wishlist')
-          .add({
-            url: urlLoadedFile,
-            nameCZ: photoNameCZ,
-            description: photoDescription,
-            category: photoCategory,
-            timeStamp: firebase.firestore.FieldValue.serverTimestamp(),
-          });
+        db.collection('users').doc(user.uid).collection('wishlist').add({
+          url: urlLoadedFile,
+          nameCZ: photoNameCZ,
+          description: photoDescription,
+          category: photoCategory,
+          timeStamp: firebase.firestore.FieldValue.serverTimestamp(),
+        });
         setPhotoNameCZ('');
       }, []);
   };
@@ -143,20 +136,6 @@ export const Wishlist = () => {
                 Nahrát
               </button>
             </form>
-            {newPhotos !== 0 && (
-              <>
-                <p>Nahrané fotky</p>
-                <ul>
-                  {photos.slice(0, newPhotos).map((photo) => (
-                    <li>
-                      {photo.nameCZ}
-                      <br />
-                      <img src={photo.url} height="50" alt="" />
-                    </li>
-                  ))}
-                </ul>
-              </>
-            )}
           </div>
         </div>
       )}

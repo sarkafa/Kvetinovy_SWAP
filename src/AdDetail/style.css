@@ -4,10 +4,10 @@
   justify-content: space-between;
 }
 .ad__detail img {
-  flex: 1 0 30%;
+  max-width: 50%;
 }
 .ad__detail--info {
-  flex: 1 0 30%;
+  max-width: 50%;
   text-align: center;
 }
 .ad__detail--info h1 {
@@ -19,4 +19,25 @@
   color: white;
   padding: 25px;
   border-radius: 10px;
+}
+
+.carousel {
+  display: flex;
+  max-width: 500px;
+  height: 250px;
+}
+
+.carousel__predchozi,
+.carousel__dalsi {
+  flex-shrink: 0;
+}
+
+.carousel__media {
+  flex-grow: 1;
+}
+
+.carousel__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }

@@ -15,20 +15,18 @@ const Options = ({ name }) => {
 };
 
 export const MyFlowers = () => {
+  const user = firebase.auth().currentUser;
   const [open, setOpen] = useState(false);
   const [file, setFile] = useState();
   const [photoNameCZ, setPhotoNameCZ] = useState('');
   const [photoDescription, setPhotoDescription] = useState('');
   const [photoCategory, setPhotoCategory] = useState('Vyberte');
   const [photos, setPhotos] = useState([]);
-  const [newPhotos, setNewPhotos] = useState(0);
-
-  console.log(`new kytky:${newPhotos}`);
 
   useEffect(() => {
     const resetAfterSnapshot = db
       .collection('users')
-      .doc('YpadprYKCHbtd91y02hL')
+      .doc(user.uid)
       .collection('myFlowers')
       .orderBy('timeStamp', 'desc')
       .onSnapshot((snapshot) => {
@@ -43,8 +41,6 @@ export const MyFlowers = () => {
       return;
     }
 
-    setNewPhotos(newPhotos + 1);
-
     storage
       .ref(`/myFlowers/${file.name}`)
       .put(file)
@@ -55,13 +51,10 @@ export const MyFlowers = () => {
           nameCZ: photoNameCZ,
           description: photoDescription,
           category: photoCategory,
-          user: 'YpadprYKCHbtd91y02hL',
+          user: user.uid,
           timeStamp: firebase.firestore.FieldValue.serverTimestamp(),
         };
-        db.collection('users')
-          .doc('YpadprYKCHbtd91y02hL')
-          .collection('myFlowers')
-          .add(ad);
+        db.collection('users').doc(user.uid).collection('myFlowers').add(ad);
         db.collection('ads').add(ad);
 
         setPhotoName('');
@@ -94,7 +87,6 @@ export const MyFlowers = () => {
               className="btn--close"
               onClick={() => {
                 setOpen(!open);
-                setNewPhotos(0);
               }}
             >
               X
@@ -151,20 +143,6 @@ export const MyFlowers = () => {
                 Nahrát
               </button>
             </form>
-            {newPhotos !== 0 && (
-              <>
-                <p>Nahrané kytky</p>
-                <ul>
-                  {photos.slice(0, newPhotos).map((photo) => (
-                    <li>
-                      {photo.nameCZ}
-                      <br />
-                      <img src={photo.url} height="50" alt="" />
-                    </li>
-                  ))}
-                </ul>
-              </>
-            )}
           </div>
         </div>
       )}
