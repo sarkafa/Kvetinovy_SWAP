@@ -3,23 +3,25 @@ import './style.css';
 import { MyFlowers } from '../MyFlowers';
 import { Ads } from '../Ads';
 import { Wishlist } from '../Wishlist';
-
+import { LogIn } from '../LogIn';
 import AdDetail from '../AdDetail';
-
+import { auth } from '../firebase';
 import {
   BrowserRouter as Router,
   Route,
   NavLink,
   Switch,
+  Redirect,
 } from 'react-router-dom';
 
 const PrivateRoute = ({ children, ...rest }) => {
-  let auth = useAuth();
+  const user = auth.currentUser;
+
   return (
     <Route
       {...rest}
       render={({ location }) =>
-        auth.user ? (
+        user ? (
           children
         ) : (
           <Redirect
@@ -62,25 +64,28 @@ const Menu = () => {
 
         <div className="user">
           <div className="user__name">
-            <NavLink to="/myflowers">Anicka Nova</NavLink>
+            <NavLink to="/login">Anicka Nova</NavLink>
           </div>
           <div className="user__icon">
-            <NavLink to="/myflowers"></NavLink>
+            <NavLink to="/login"></NavLink>
           </div>
         </div>
       </div>
 
       <Switch>
-        <Route exact path="/">
+        <Route exact path="/login">
+          <LogIn />
+        </Route>
+        <PrivateRoute exact path="/">
           <Ads />
-        </Route>
-        <Route path="/detail/:id" children={<AdDetail />}></Route>
-        <Route path="/myflowers">
+        </PrivateRoute>
+        <PrivateRoute path="/detail/:id" children={<AdDetail />}></PrivateRoute>
+        <PrivateRoute path="/myflowers">
           <MyFlowers />
-        </Route>
-        <Route path="/wishlist">
+        </PrivateRoute>
+        <PrivateRoute path="/wishlist">
           <Wishlist />
-        </Route>
+        </PrivateRoute>
       </Switch>
     </Router>
   );
