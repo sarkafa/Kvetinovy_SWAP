@@ -1,0 +1,22 @@
+.ad__detail {
+  padding: 5vw;
+  display: flex;
+  justify-content: space-between;
+}
+.ad__detail img {
+  flex: 1 0 30%;
+}
+.ad__detail--info {
+  flex: 1 0 30%;
+  text-align: center;
+}
+.ad__detail--info h1 {
+  color: #e6c229;
+}
+.ad__detail button {
+  border: none;
+  background-color: #28875e;
+  color: white;
+  padding: 25px;
+  border-radius: 10px;
+}

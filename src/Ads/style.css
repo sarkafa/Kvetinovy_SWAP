@@ -4,12 +4,11 @@
   justify-content: space-between;
 }
 .ads__categories {
-  border: 1px solid black;
+  /*border: 1px solid black;*/
   flex-basis: 20%;
 }
 
 .ads__container {
-  border: 1px solid green;
   display: flex;
   flex-basis: 80%;
   flex-wrap: wrap;
