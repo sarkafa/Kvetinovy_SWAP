@@ -1,12 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import './style.css';
-import { Router, Route, NavLink, Switch } from 'react-router-dom';
-import { auth } from '../firebase';
+import MyFlowerItem from './../MyFlowerItem';
+import { categories } from '.././categories';
+import { auth, db, storage } from './../firebase';
 import firebase from 'firebase';
 
-const MyFlowers = () => {
+const CategoryOptions = ({ name }) => {
+  return (
+    <>
+      <option value={name}>{name}</option>
+    </>
+  );
+};
+
+export const MyFlowers = () => {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
+
+  const [open, setOpen] = useState(false);
+  const [file, setFile] = useState();
+  const [photoNameCZ, setPhotoNameCZ] = useState('');
+  const [photoNameL, setPhotoNameL] = useState('');
+  const [photoNameC, setPhotoNameC] = useState('');
+  const [photoDescription, setPhotoDescription] = useState('');
+  const [photoCategory, setPhotoCategory] = useState('Vyberte');
+  const [photos, setPhotos] = useState([]);
+  const [newPhotos, setNewPhotos] = useState(0);
+
+  console.log(`new kytky:${newPhotos}`);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -49,6 +70,51 @@ const MyFlowers = () => {
           alert(errorMessage);
         }
         console.log(error);
+      });
+  };
+
+  useEffect(() => {
+    const resetAfterSnapshot = db
+      .collection('users')
+      .doc('YpadprYKCHbtd91y02hL')
+      .collection('myFlowers')
+      .orderBy('timeStamp', 'desc')
+      .onSnapshot((snapshot) => {
+        setPhotos(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+      });
+    return resetAfterSnapshot;
+  });
+
+  {
+    console.log(photoNameCZ);
+  }
+
+  const loadToFirebase = (event) => {
+    event.preventDefault();
+    if (!file) {
+      return;
+    }
+
+    setNewPhotos(newPhotos + 1);
+
+    storage
+      .ref(`/flowers/${file.name}`)
+      .put(file)
+      .then((snapshot) => snapshot.ref.getDownloadURL())
+      .then((urlLoadedFile) => {
+        db.collection('users')
+          .doc('YpadprYKCHbtd91y02hL')
+          .collection('myFlowers')
+          .add({
+            url: urlLoadedFile,
+            nameCZ: photoNameCZ,
+            nameL: photoNameL,
+            nameC: photoNameC,
+            description: photoDescription,
+            category: photoCategory,
+            timeStamp: firebase.firestore.FieldValue.serverTimestamp(),
+          });
+        setPhotoName('');
       });
   };
 
@@ -107,70 +173,6 @@ const MyFlowers = () => {
           </form>
         </div>
       </div>
-    </>
-  );
-};
-
-export const MyFlowers = () => {
-  const [open, setOpen] = useState(false);
-  const [file, setFile] = useState();
-  const [photoNameCZ, setPhotoNameCZ] = useState('');
-  const [photoNameL, setPhotoNameL] = useState('');
-  const [photoNameC, setPhotoNameC] = useState('');
-  const [photoDescription, setPhotoDescription] = useState('');
-  const [photoCategory, setPhotoCategory] = useState('Vyberte');
-  const [photos, setPhotos] = useState([]);
-  const [newPhotos, setNewPhotos] = useState(0);
-
-  console.log(`new kytky:${newPhotos}`);
-
-  useEffect(() => {
-    const resetAfterSnapshot = db
-      .collection('users')
-      .doc('YpadprYKCHbtd91y02hL')
-      .collection('myFlowers')
-      .orderBy('timeStamp', 'desc')
-      .onSnapshot((snapshot) => {
-        setPhotos(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-      });
-    return resetAfterSnapshot;
-  });
-
-  {
-    console.log(photoNameCZ);
-  }
-
-  const loadToFirebase = (event) => {
-    event.preventDefault();
-    if (!file) {
-      return;
-    }
-
-    setNewPhotos(newPhotos + 1);
-
-    storage
-      .ref(`/flowers/${file.name}`)
-      .put(file)
-      .then((snapshot) => snapshot.ref.getDownloadURL())
-      .then((urlLoadedFile) => {
-        db.collection('users')
-          .doc('YpadprYKCHbtd91y02hL')
-          .collection('myFlowers')
-          .add({
-            url: urlLoadedFile,
-            nameCZ: photoNameCZ,
-            nameL: photoNameL,
-            nameC: photoNameC,
-            description: photoDescription,
-            category: photoCategory,
-            timeStamp: firebase.firestore.FieldValue.serverTimestamp(),
-          });
-        setPhotoName('');
-      });
-  };
-
-  return (
-    <>
       <div className="myFlowers">
         <button onClick={() => setOpen(!open)} className="btn--open">
           Přidej kytku
