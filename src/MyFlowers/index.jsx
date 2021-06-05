@@ -1,10 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import './style.css';
-import { Router, Route, NavLink, Switch } from 'react-router-dom';
-import { auth } from '../firebase';
+import MyFlowerItem from './../MyFlowerItem';
+import { categories } from '.././categories';
+import { auth, db, storage } from './../firebase';
 import firebase from 'firebase';
 
+const CategoryOptions = ({ name }) => {
+  return (
+    <>
+      <option value={name}>{name}</option>
+    </>
+  );
+};
+
 export const MyFlowers = () => {
+  const [email, setEmail] = useState(null);
+  const [password, setPassword] = useState(null);
+
   const [open, setOpen] = useState(false);
   const [file, setFile] = useState();
   const [photoNameCZ, setPhotoNameCZ] = useState('');
