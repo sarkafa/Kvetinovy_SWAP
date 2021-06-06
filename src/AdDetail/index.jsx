@@ -9,10 +9,11 @@ const AdDetail = ({}) => {
   const [detail, setDetail] = useState(null);
   const [swap, setSwap] = useState(false);
   const [userWishlist, setUserWishlist] = useState([]);
-  const [index, setIndex] = useState(0);
+  const [index1, setIndex1] = useState(0);
   let { id } = useParams();
+  const [isSelected, setIsSelected] = useState('');
+
   const user = firebase.auth().currentUser;
-  console.log(user.uid);
 
   useEffect(() => {
     let adDetail = db;
@@ -42,15 +43,17 @@ const AdDetail = ({}) => {
         let userList = [];
         querySnapshot.forEach((doc) => {
           // doc.data() is never undefined for query doc snapshots
-          console.log(doc.id, ' => ', doc.data());
-          userList.push(doc.data());
-          console.log('ahoj', [...userWishlist, doc.data()]);
+
+          userList.push({ ...doc.data(), id: doc.id });
         });
         setUserWishlist(userList);
       });
   }, []);
 
-  console.log(`user wishlist`, userWishlist);
+  console.log(`index1`, index1);
+
+  console.log(`size: `, userWishlist.length);
+  console.log(userWishlist);
 
   return (
     <div className="ad__detail">
@@ -63,37 +66,86 @@ const AdDetail = ({}) => {
             <p>{detail !== null ? detail.description : 'popisok'}</p>
             {swap === false && (
               <button
+                className="btn__swap"
                 onClick={() => {
-                  console.log('navrh vymeny');
                   setSwap(true);
                 }}
               >
-                Navrhni výmenu
+                Nabídni kytku
               </button>
             )}
 
             {swap === true && (
-              <div className="carousel">
-                <button
-                  className="carousel__predchozi"
-                  aria-label="předchozí"
-                  onClick={() => setIndex(index === 0 ? 4 : index - 1)}
-                ></button>
-                <div className="carousel__media">
-                  <img
-                    className="carousel__image"
-                    src={userWishlist[index].url}
-                    alt=""
-                  />
+              <>
+                <div className="carousel">
+                  <button
+                    className="carousel__predchozi"
+                    aria-label="předchozí"
+                    onClick={() => {
+                      setIndex1(
+                        index1 === 0 ? userWishlist.length - 1 : index1 - 1,
+                      );
+                    }}
+                  >
+                    ←
+                  </button>
+                  <div className="carousel__media">
+                    <img
+                      className={`carousel__image ${
+                        isSelected === userWishlist[index1].url
+                      }`}
+                      src={userWishlist[index1].url}
+                      alt=""
+                      onClick={() => {
+                        setIsSelected(userWishlist[index1].id);
+                      }}
+                    />
+                    <img
+                      className={`carousel__image ${
+                        isSelected ===
+                        userWishlist[
+                          `${
+                            index1 === userWishlist.length - 1 ? 0 : index1 + 1
+                          }`
+                        ].id
+                          ? 'carousel__image--selected'
+                          : ''
+                      }`}
+                      src={
+                        userWishlist[
+                          `${
+                            index1 === userWishlist.length - 1 ? 0 : index1 + 1
+                          }`
+                        ].url
+                      }
+                      alt=""
+                      onClick={() => {
+                        setIsSelected(
+                          userWishlist[
+                            `${
+                              index1 === userWishlist.length - 1
+                                ? 0
+                                : index1 + 1
+                            }`
+                          ].id,
+                        );
+                      }}
+                    />
+                  </div>
+                  <button
+                    className="carousel__dalsi"
+                    aria-label="další"
+                    onClick={() => {
+                      setIndex1(
+                        index1 === userWishlist.length - 1 ? 0 : index1 + 1,
+                      );
+                    }}
+                  >
+                    →
+                  </button>
                 </div>
-                <button
-                  className="carousel__dalsi"
-                  aria-label="další"
-                  onClick={() => setIndex(index === 4 ? 0 : index + 1)}
-                >
-                  →
-                </button>
-              </div>
+                <button className="btn__swap">Navrhni výmenu</button>
+              </>
             )}
           </div>
         </>
