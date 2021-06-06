@@ -51,8 +51,19 @@ const AdDetail = ({}) => {
       });
   }, []);
 
-  console.log(`index1`, index1);
+  const handleClick = () => {
+    realtime
+      .ref('swaps/' + detail.user)
+      .push()
+      .set({
+        swapperID: user.uid,
+        adFlower: detail,
+        offeredFlower: myFlowers.find((flower) => flower.id === isSelected),
+      });
+    setSendSwap(true);
+  };
 
+  console.log(`index1`, index1);
   console.log(`size: `, myFlowers.length);
   console.log(myFlowers);
 
@@ -158,22 +169,7 @@ const AdDetail = ({}) => {
                     →
                   </button>
                 </div>
-                <button
-                  className="btn__swap"
-                  onClick={() => {
-                    realtime
-                      .ref('swaps/' + detail.user)
-                      .push()
-                      .set({
-                        swapperID: user.uid,
-                        adFlower: detail,
-                        offeredFlower: myFlowers.find(
-                          (flower) => flower.id === isSelected,
-                        ),
-                      });
-                    setSendSwap(true);
-                  }}
-                >
+                <button className="btn__swap" onClick={handleClick}>
                   {sendSwap
                     ? 'Tvoja kytka sa už teší na nového majiteľa'
                     : 'Navrhni výmenu'}
