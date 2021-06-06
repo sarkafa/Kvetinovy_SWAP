@@ -12,6 +12,7 @@ import {
   NavLink,
   Switch,
   Redirect,
+  useHistory,
 } from 'react-router-dom';
 
 const PrivateRoute = ({ children, ...rest }) => {
@@ -37,6 +38,16 @@ const PrivateRoute = ({ children, ...rest }) => {
 };
 
 const Menu = () => {
+  const [menuOpened, setMenuOpened] = useState(false);
+  const [signedUser, setSignedUser] = useState(null);
+  const history = useHistory();
+
+  auth.onAuthStateChanged(function (user) {
+    if (user) {
+      setSignedUser(user);
+    }
+  });
+
   return (
     <Router>
       <div className="menu">
@@ -64,10 +75,28 @@ const Menu = () => {
 
         <div className="user">
           <div className="user__name">
-            <NavLink to="/login">Anicka Nova</NavLink>
+            <NavLink to="/login">{signedUser ? signedUser.email : ''}</NavLink>
           </div>
-          <div className="user__icon">
-            <NavLink to="/login"></NavLink>
+          <div
+            className={signedUser ? 'user__icon' : ''}
+            onClick={() => {
+              setMenuOpened(!menuOpened);
+              console.log(menuOpened);
+            }}
+          >
+            <div className={menuOpened ? 'logout' : 'logout--closed'}>
+              <button
+                className="btn"
+                onClick={() => {
+                  auth.signOut().then(() => {
+                    console.log('uzivatel odhlasenyx');
+                    location.href = location.origin;
+                  });
+                }}
+              >
+                Odhlásiť
+              </button>
+            </div>
           </div>
         </div>
       </div>

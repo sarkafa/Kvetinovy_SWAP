@@ -61,6 +61,22 @@
   background-repeat: no-repeat;
   background-position: center;
 }
+.user__icon {
+  flex-shrink: 0;
+}
+.logout {
+  width: 200px;
+  height: 100px;
+  position: fixed;
+  right: 0;
+  top: 68px;
+  background-color: #28875e;
+  text-align: center;
+  padding-top: 43px;
+}
+.logout--closed {
+  display: none;
+}
 
 .user {
   padding-left: 5px;
