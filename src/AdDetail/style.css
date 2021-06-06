@@ -40,12 +40,15 @@
 
 .carousel__media {
   flex-grow: 1;
+  display: flex;
 }
 
-.carousel__image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.carousel__image--left,
+.carousel__image--right {
+  background-position: center;
+  flex: 1;
+  height: 200px;
+  background-size: cover;
   border-bottom: 5px solid white;
 }
 

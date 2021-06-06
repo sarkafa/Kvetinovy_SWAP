@@ -19,6 +19,7 @@ const Categories = ({ category, onClick }) => {
 export const Ads = () => {
   const [ads, setAds] = useState([]);
   const [categoryValue, setCategoryValue] = useState(null);
+  const [match, setMatch] = useState(false);
 
   useEffect(() => {
     let resetAfterSnapshot = db.collection('ads');
@@ -36,7 +37,23 @@ export const Ads = () => {
     return resetAfterSnapshot;
   }, [categoryValue]);
 
-  console.log(ads);
+  useEffect(() => {
+    let resetAfterSnapshot = db.collection('ads');
+    if (match) {
+      resetAfterSnapshot = resetAfterSnapshot.where(
+        'category',
+        '==',
+        categoryValue,
+      );
+    }
+
+    resetAfterSnapshot.orderBy('timeStamp', 'desc').onSnapshot((snapshot) => {
+      setAds(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    });
+    return resetAfterSnapshot;
+  }, [categoryValue]);
+
+  console.log(match);
 
   return (
     <>
@@ -58,9 +75,13 @@ export const Ads = () => {
               }}
             />
           ))}
+
           <p>Match</p>
           <label className="switch">
-            <input type="checkbox" />
+            <input
+              type="checkbox"
+              onClick={() => setMatch(match ? false : true)}
+            />
             <span className="slider round"></span>
           </label>
         </div>

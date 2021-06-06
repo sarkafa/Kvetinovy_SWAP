@@ -37,7 +37,7 @@ const AdDetail = ({}) => {
   useEffect(() => {
     db.collection('users')
       .doc(user.uid)
-      .collection('wishlist')
+      .collection('myFlowers')
       .get()
       .then((querySnapshot) => {
         let userList = [];
@@ -90,35 +90,23 @@ const AdDetail = ({}) => {
                     ←
                   </button>
                   <div className="carousel__media">
-                    <img
-                      className={`carousel__image ${
-                        isSelected === userWishlist[index1].url
-                      }`}
-                      src={userWishlist[index1].url}
-                      alt=""
-                      onClick={() => {
-                        setIsSelected(userWishlist[index1].id);
-                      }}
-                    />
-                    <img
-                      className={`carousel__image ${
-                        isSelected ===
-                        userWishlist[
-                          `${
-                            index1 === userWishlist.length - 1 ? 0 : index1 + 1
-                          }`
-                        ].id
+                    <div
+                      className={`carousel__image--left ${
+                        isSelected === userWishlist[index1].id
                           ? 'carousel__image--selected'
                           : ''
                       }`}
-                      src={
-                        userWishlist[
-                          `${
-                            index1 === userWishlist.length - 1 ? 0 : index1 + 1
-                          }`
-                        ].url
-                      }
-                      alt=""
+                      style={{
+                        backgroundImage: `url(${userWishlist[index1].url})`,
+                      }}
+                      onClick={() => {
+                        setIsSelected(userWishlist[index1].id);
+                      }}
+                    >
+                      <img src={'/assets/swap.svg'} alt="" />
+                    </div>
+
+                    <div
                       onClick={() => {
                         setIsSelected(
                           userWishlist[
@@ -130,7 +118,28 @@ const AdDetail = ({}) => {
                           ].id,
                         );
                       }}
-                    />
+                      className={`carousel__image--right ${
+                        isSelected ===
+                        userWishlist[
+                          index1 === userWishlist.length - 1 ? 0 : index1 + 1
+                        ].id
+                          ? 'carousel__image--selected'
+                          : ''
+                      }`}
+                      style={{
+                        backgroundImage: `url(${
+                          userWishlist[
+                            `${
+                              index1 === userWishlist.length - 1
+                                ? 0
+                                : index1 + 1
+                            }`
+                          ].url
+                        })`,
+                      }}
+                    >
+                      <img src={'/assets/swap.svg'} alt="" />
+                    </div>
                   </div>
                   <button
                     className="carousel__dalsi"
