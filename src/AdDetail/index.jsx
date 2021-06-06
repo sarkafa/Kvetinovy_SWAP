@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './style.css';
 import { useParams } from 'react-router-dom';
-import { db } from './../firebase';
+import { db, realtime } from '../firebase';
 import firebase from 'firebase';
 import FlowerItem from '../FlowerItem';
 
@@ -13,7 +13,7 @@ const AdDetail = ({}) => {
   let { id } = useParams();
   const [isSelected, setIsSelected] = useState('');
   const [isSwap, setIsSwap] = useState(false);
-
+  const [sendSwap, setSendSwap] = useState(false);
   const user = firebase.auth().currentUser;
 
   useEffect(() => {
@@ -158,7 +158,26 @@ const AdDetail = ({}) => {
                     →
                   </button>
                 </div>
-                <button className="btn__swap">Navrhni výmenu</button>
+                <button
+                  className="btn__swap"
+                  onClick={() => {
+                    realtime
+                      .ref('swaps/' + detail.user)
+                      .push()
+                      .set({
+                        swapperID: user.uid,
+                        adFlower: detail,
+                        offeredFlower: myFlowers.find(
+                          (flower) => flower.id === isSelected,
+                        ),
+                      });
+                    setSendSwap(true);
+                  }}
+                >
+                  {sendSwap
+                    ? 'Tvoja kytka sa už teší na nového majiteľa'
+                    : 'Navrhni výmenu'}
+                </button>
               </>
             )}
           </div>
