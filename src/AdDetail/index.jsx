@@ -8,10 +8,11 @@ import FlowerItem from '../FlowerItem';
 const AdDetail = ({}) => {
   const [detail, setDetail] = useState(null);
   const [swap, setSwap] = useState(false);
-  const [userWishlist, setUserWishlist] = useState([]);
+  const [myFlowers, setMyFlowers] = useState([]);
   const [index1, setIndex1] = useState(0);
   let { id } = useParams();
   const [isSelected, setIsSelected] = useState('');
+  const [isSwap, setIsSwap] = useState(false);
 
   const user = firebase.auth().currentUser;
 
@@ -46,14 +47,14 @@ const AdDetail = ({}) => {
 
           userList.push({ ...doc.data(), id: doc.id });
         });
-        setUserWishlist(userList);
+        setMyFlowers(userList);
       });
   }, []);
 
   console.log(`index1`, index1);
 
-  console.log(`size: `, userWishlist.length);
-  console.log(userWishlist);
+  console.log(`size: `, myFlowers.length);
+  console.log(myFlowers);
 
   return (
     <div className="ad__detail">
@@ -83,7 +84,7 @@ const AdDetail = ({}) => {
                     aria-label="předchozí"
                     onClick={() => {
                       setIndex1(
-                        index1 === 0 ? userWishlist.length - 1 : index1 - 1,
+                        index1 === 0 ? myFlowers.length - 1 : index1 - 1,
                       );
                     }}
                   >
@@ -92,53 +93,57 @@ const AdDetail = ({}) => {
                   <div className="carousel__media">
                     <div
                       className={`carousel__image--left ${
-                        isSelected === userWishlist[index1].id
+                        isSelected === myFlowers[index1].id
                           ? 'carousel__image--selected'
                           : ''
                       }`}
                       style={{
-                        backgroundImage: `url(${userWishlist[index1].url})`,
+                        backgroundImage: `url(${myFlowers[index1].url})`,
                       }}
                       onClick={() => {
-                        setIsSelected(userWishlist[index1].id);
+                        setIsSelected(myFlowers[index1].id);
                       }}
                     >
-                      <img src={'/assets/swap.svg'} alt="" />
+                      <img
+                        className="swap__image"
+                        src={'/assets/swap.svg'}
+                        alt=""
+                      />
                     </div>
 
                     <div
                       onClick={() => {
                         setIsSelected(
-                          userWishlist[
+                          myFlowers[
                             `${
-                              index1 === userWishlist.length - 1
-                                ? 0
-                                : index1 + 1
+                              index1 === myFlowers.length - 1 ? 0 : index1 + 1
                             }`
                           ].id,
                         );
                       }}
                       className={`carousel__image--right ${
                         isSelected ===
-                        userWishlist[
-                          index1 === userWishlist.length - 1 ? 0 : index1 + 1
+                        myFlowers[
+                          index1 === myFlowers.length - 1 ? 0 : index1 + 1
                         ].id
                           ? 'carousel__image--selected'
                           : ''
                       }`}
                       style={{
                         backgroundImage: `url(${
-                          userWishlist[
+                          myFlowers[
                             `${
-                              index1 === userWishlist.length - 1
-                                ? 0
-                                : index1 + 1
+                              index1 === myFlowers.length - 1 ? 0 : index1 + 1
                             }`
                           ].url
                         })`,
                       }}
                     >
-                      <img src={'/assets/swap.svg'} alt="" />
+                      <img
+                        className="swap__image"
+                        src={'/assets/swap.svg'}
+                        alt=""
+                      />
                     </div>
                   </div>
                   <button
@@ -146,7 +151,7 @@ const AdDetail = ({}) => {
                     aria-label="další"
                     onClick={() => {
                       setIndex1(
-                        index1 === userWishlist.length - 1 ? 0 : index1 + 1,
+                        index1 === myFlowers.length - 1 ? 0 : index1 + 1,
                       );
                     }}
                   >

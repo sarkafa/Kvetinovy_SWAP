@@ -50,6 +50,7 @@
   height: 200px;
   background-size: cover;
   border-bottom: 5px solid white;
+  position: relative;
 }
 
 .carousel__image:hover {
@@ -58,4 +59,11 @@
 
 .carousel__image--selected {
   border-bottom: 5px solid #e6c229;
+}
+
+.swap__image {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 20px;
 }
