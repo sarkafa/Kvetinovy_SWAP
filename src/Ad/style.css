@@ -12,6 +12,7 @@
   height: 100%;
   vertical-align: middle;
   flex-basis: 30%;
+  border-bottom: 5px solid white;
 }
 
 .ad {
