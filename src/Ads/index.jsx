@@ -37,21 +37,21 @@ export const Ads = () => {
     return resetAfterSnapshot;
   }, [categoryValue]);
 
-  useEffect(() => {
-    let resetAfterSnapshot = db.collection('ads');
-    if (match) {
-      resetAfterSnapshot = resetAfterSnapshot.where(
-        'category',
-        '==',
-        categoryValue,
-      );
-    }
+  // useEffect(() => {
+  //   let resetAfterSnapshot = db.collection('ads');
+  //   if (match) {
+  //     resetAfterSnapshot = resetAfterSnapshot.where(
+  //       'category',
+  //       '==',
+  //       categoryValue,
+  //     );
+  //   }
 
-    resetAfterSnapshot.orderBy('timeStamp', 'desc').onSnapshot((snapshot) => {
-      setAds(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
-    });
-    return resetAfterSnapshot;
-  }, [categoryValue]);
+  //   resetAfterSnapshot.orderBy('timeStamp', 'desc').onSnapshot((snapshot) => {
+  //     setAds(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+  //   });
+  //   return resetAfterSnapshot;
+  // }, [categoryValue]);
 
   console.log(match);
 

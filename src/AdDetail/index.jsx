@@ -13,6 +13,8 @@ const AdDetail = ({}) => {
   let { id } = useParams();
   const [isSelected, setIsSelected] = useState('');
   const [isSwap, setIsSwap] = useState(false);
+  const [userWishlist, setUserWishlist] = useState([]);
+  const [forSwap, setForSwap] = useState([]);
 
   const user = firebase.auth().currentUser;
 
@@ -25,6 +27,7 @@ const AdDetail = ({}) => {
         if (doc.exists) {
           setDetail(doc.data());
           console.log('Document data:', doc.data());
+          loadUserWishlist(doc.data());
         } else {
           // doc.data() will be undefined in this case
           console.log('No such document!');
@@ -51,10 +54,27 @@ const AdDetail = ({}) => {
       });
   }, []);
 
-  console.log(`index1`, index1);
+  const loadUserWishlist = (detail) => {
+    db.collection('users')
+      .doc(detail.user)
+      .collection('wishlist')
+      .get()
+      .then((querySnapshot) => {
+        console.log(`userwishlist1`, querySnapshot);
+        let userWishlistList = [];
+        querySnapshot.forEach((doc) => {
+          // doc.data() is never undefined for query doc snapshots
 
-  console.log(`size: `, myFlowers.length);
-  console.log(myFlowers);
+          userWishlistList.push({ ...doc.data(), id: doc.id });
+        });
+        setUserWishlist(userWishlistList);
+      });
+  };
+
+  userWishlist;
+
+  console.log(`myflowers`, myFlowers);
+  console.log(`userWislist`, userWishlist);
 
   return (
     <div className="ad__detail">
@@ -104,20 +124,22 @@ const AdDetail = ({}) => {
                         setIsSelected(myFlowers[index1].id);
                       }}
                     >
-                      <img
-                        className="swap__image"
-                        src={'/assets/swap.svg'}
-                        alt=""
-                      />
+                      {userWishlist.find(
+                        (flower) => flower.nameCZ === myFlowers[index1].nameCZ,
+                      ) && (
+                        <img
+                          className="swap__image"
+                          src={'/assets/swap.svg'}
+                          alt=""
+                        />
+                      )}
                     </div>
 
                     <div
                       onClick={() => {
                         setIsSelected(
                           myFlowers[
-                            `${
-                              index1 === myFlowers.length - 1 ? 0 : index1 + 1
-                            }`
+                            index1 === myFlowers.length - 1 ? 0 : index1 + 1
                           ].id,
                         );
                       }}
@@ -139,11 +161,19 @@ const AdDetail = ({}) => {
                         })`,
                       }}
                     >
-                      <img
-                        className="swap__image"
-                        src={'/assets/swap.svg'}
-                        alt=""
-                      />
+                      {userWishlist.find(
+                        (flower) =>
+                          flower.nameCZ ===
+                          myFlowers[
+                            index1 === myFlowers.length - 1 ? 0 : index1 + 1
+                          ].nameCZ,
+                      ) && (
+                        <img
+                          className="swap__image"
+                          src={'/assets/swap.svg'}
+                          alt=""
+                        />
+                      )}
                     </div>
                   </div>
                   <button

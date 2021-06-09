@@ -22,6 +22,7 @@
   flex-basis: 220px;
   flex-grow: 0;
   height: 275px;
+  border-bottom: 5px solid white;
 }
 
 .ad:hover {
