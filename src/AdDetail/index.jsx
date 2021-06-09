@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './style.css';
 import { useParams } from 'react-router-dom';
-import { db } from './../firebase';
+import { db, realtime } from '../firebase';
 import firebase from 'firebase';
 import FlowerItem from '../FlowerItem';
 
@@ -16,6 +16,7 @@ const AdDetail = ({}) => {
   const [userWishlist, setUserWishlist] = useState([]);
   const [forSwap, setForSwap] = useState([]);
 
+  const [sendSwap, setSendSwap] = useState(false);
   const user = firebase.auth().currentUser;
 
   useEffect(() => {
@@ -75,6 +76,21 @@ const AdDetail = ({}) => {
 
   console.log(`myflowers`, myFlowers);
   console.log(`userWislist`, userWishlist);
+  const handleClick = () => {
+    realtime
+      .ref('swaps/' + detail.user)
+      .push()
+      .set({
+        swapperID: user.uid,
+        adFlower: detail,
+        offeredFlower: myFlowers.find((flower) => flower.id === isSelected),
+      });
+    setSendSwap(true);
+  };
+
+  console.log(`index1`, index1);
+  console.log(`size: `, myFlowers.length);
+  console.log(myFlowers);
 
   return (
     <div className="ad__detail">
@@ -188,7 +204,11 @@ const AdDetail = ({}) => {
                     →
                   </button>
                 </div>
-                <button className="btn__swap">Navrhni výmenu</button>
+                <button className="btn__swap" onClick={handleClick}>
+                  {sendSwap
+                    ? 'Tvoja kytka sa už teší na nového majiteľa'
+                    : 'Navrhni výmenu'}
+                </button>
               </>
             )}
           </div>
@@ -196,5 +216,5 @@ const AdDetail = ({}) => {
       )}
     </div>
   );
-};
+
 export default AdDetail;

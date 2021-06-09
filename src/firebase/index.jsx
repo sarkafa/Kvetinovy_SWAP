@@ -15,9 +15,11 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 const storage = firebase.storage();
 const auth = firebase.auth();
+const realtime = firebase.database();
 if (location.hostname === 'localhost') {
   db.useEmulator('localhost', 6002);
   storage.useEmulator('localhost', 9199);
   auth.useEmulator('http://localhost:9099');
+  realtime.useEmulator('localhost', 9001);
 }
-export { db, storage, auth };
+export { db, storage, auth, realtime };
