@@ -8,7 +8,7 @@ const FlowerItem = ({ url, id, description, flowerNameCZ, category }) => {
         <img src={url} />
       </div>
       <h3 className="item__name">{flowerNameCZ}</h3>
-      <div>. {category}</div>
+      <div>{category}</div>
     </div>
   );
 };

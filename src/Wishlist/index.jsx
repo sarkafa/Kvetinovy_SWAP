@@ -45,6 +45,7 @@ export const Wishlist = () => {
           description: photoDescription,
           category: photoCategory,
           timeStamp: firebase.firestore.FieldValue.serverTimestamp(),
+          user: user.uid,
         });
         setPhotoNameCZ('');
       }, []);

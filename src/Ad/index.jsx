@@ -7,7 +7,7 @@ const Ad = ({ id, key, category, flowerNameCZ, url }) => {
   const handleClick = () => {
     history.push(`/detail/${id}`);
   };
-  console.log(id);
+
   return (
     <div className="ad" onClick={handleClick}>
       <div className="ad__picture">
@@ -15,7 +15,7 @@ const Ad = ({ id, key, category, flowerNameCZ, url }) => {
       </div>
       <div className="ad__description">
         <h3 className="ad__name">{flowerNameCZ}</h3>
-        <div>. {category}</div>
+        <div>{category}</div>
       </div>
     </div>
   );
