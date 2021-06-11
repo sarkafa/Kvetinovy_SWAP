@@ -64,6 +64,8 @@ const Menu = () => {
   });
 
   useEffect(() => {
+    if (!signedUser) return;
+
     let notifications = realtime.ref();
     notifications
       .child('swaps')
