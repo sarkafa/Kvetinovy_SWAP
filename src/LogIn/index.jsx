@@ -8,6 +8,7 @@ export const LogIn = () => {
   const [password, setPassword] = useState(null);
   const history = useHistory();
   const location = useLocation();
+  const [registration, setRegistration] = useState(true);
   let { from } = location.state || { from: { pathname: '/' } };
 
   auth.onAuthStateChanged(function (user) {
@@ -62,7 +63,7 @@ export const LogIn = () => {
   return (
     <div className="login__container">
       <div className="webDescription">
-        <img src="/assets/IMG_20210603_135112.jpg" />
+        <img src="\assets\swiss-cheese-plant-light-houseplant-photocatalysis-small-potted-plants-6194e80d43c972307b5e89c063193b2b.png" />
         <p>
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio
           corrupti cum asperiores distinctio vel nam ratione ullam unde,
@@ -71,54 +72,77 @@ export const LogIn = () => {
         </p>
       </div>
       <div className="formular">
-        <div id="modal-signup" className="modal">
+        <div
+          id="modal-signup"
+          className={registration ? 'modal' : 'modal--closed'}
+        >
+          <p>Prihlásenie</p>
           <div className="modal-content">
-            <h4>Prihlás sa</h4>
             <form id="signup-form" onSubmit={handleSubmit2}>
               <div className="input-field">
-                <input
-                  type="email"
-                  id="signup-email"
-                  required
-                  onChange={(event) => setEmail(event.target.value)}
-                />
-                <label for="signup-email">Emailová adresa</label>
+                <label>
+                  <input
+                    type="email"
+                    id="signup-email"
+                    required
+                    placeholder="Zadajte e-mail"
+                    onChange={(event) => setEmail(event.target.value)}
+                  />
+                </label>
               </div>
               <div className="input-field">
-                <input
-                  type="password"
-                  id="gignup-password"
-                  required
-                  onChange={(event) => setPassword(event.target.value)}
-                />
-                <label for="signup-password">Vaše heslo</label>
+                <label>
+                  <input
+                    type="password"
+                    id="gignup-password"
+                    required
+                    placeholder="Zadajte heslo"
+                    onChange={(event) => setPassword(event.target.value)}
+                  />
+                </label>
               </div>
-              <button className="btn">Prihlásiť</button>
+              <button className="btn form__btn">Prihlásiť</button>
             </form>
           </div>
+          <div>Ešte nemáte účet?</div>
+          <button
+            className="btn"
+            onClick={() => {
+              setRegistration(false);
+            }}
+          >
+            Zaregistrujte sa
+          </button>
         </div>
 
-        <div id="modal-login" className="modal">
+        <div
+          id="modal-login"
+          className={registration ? 'modal--closed' : 'modal'}
+        >
+          <p>Registrace</p>
           <div className="modal-content">
-            <h4>Zaregistruj sa</h4>
             <form id="login-form" onSubmit={handleSubmit}>
               <div className="input-field">
-                <input
-                  type="email"
-                  id="login-email"
-                  required
-                  onChange={(event) => setEmail(event.target.value)}
-                />
-                <label for="login-email">Emailová adresa</label>
+                <label>
+                  <input
+                    type="email"
+                    id="login-email"
+                    required
+                    placeholder="Zadajte e-mail"
+                    onChange={(event) => setEmail(event.target.value)}
+                  />{' '}
+                </label>
               </div>
               <div className="input-field">
-                <input
-                  type="password"
-                  id="login-password"
-                  required
-                  onChange={(event) => setPassword(event.target.value)}
-                />
-                <label for="login-password">Zadajte heslo</label>
+                <label>
+                  <input
+                    type="password"
+                    id="login-password"
+                    required
+                    placeholder="Zadajte heslo"
+                    onChange={(event) => setPassword(event.target.value)}
+                  />
+                </label>
               </div>
               <button className="btn">Zaregistrovať</button>
             </form>
