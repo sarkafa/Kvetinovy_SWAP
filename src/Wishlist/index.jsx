@@ -4,17 +4,17 @@ import { db, storage } from './../firebase';
 import { categories } from '.././categories';
 import { flowers } from '.././flowers';
 import firebase from 'firebase';
+import { Autocomplete } from '.././Autocomplete';
 
 import FlowerItem from '../FlowerItem';
 
 export const Wishlist = () => {
   const [open, setOpen] = useState(false);
-  const [file, setFile] = useState();
-  const [photoNameCZ, setPhotoNameCZ] = useState('');
-  const [photoDescription, setPhotoDescription] = useState('');
-  const [photoCategory, setPhotoCategory] = useState('Vyberte');
+  const [photoNameCZ, setPhotoNameCZ] = useState('Vyberte');
+  const [photoCategory, setPhotoCategory] = useState('');
   const [photos, setPhotos] = useState([]);
   const user = firebase.auth().currentUser;
+  const [file, setFile] = useState();
 
   useEffect(() => {
     const resetAfterSnapshot = db
@@ -34,21 +34,19 @@ export const Wishlist = () => {
       return;
     }
 
-    storage
-      .ref(`/wishlist/${file.name}`)
-      .put(file)
-      .then((snapshot) => snapshot.ref.getDownloadURL())
-      .then((urlLoadedFile) => {
-        db.collection('users').doc(user.uid).collection('wishlist').add({
-          url: urlLoadedFile,
-          nameCZ: photoNameCZ,
-          description: photoDescription,
-          category: photoCategory,
-          timeStamp: firebase.firestore.FieldValue.serverTimestamp(),
-          user: user.uid,
-        });
-        setPhotoNameCZ('');
-      }, []);
+    db.collection('users')
+      .doc(user.uid)
+      .collection('wishlist')
+      .add({
+        url: `assets/${photoNameCZ}.jpg`,
+        nameCZ: photoNameCZ,
+        category: photoCategory,
+        timeStamp: firebase.firestore.FieldValue.serverTimestamp(),
+        user: user.uid,
+      });
+    setPhotoNameCZ('');
+
+    setOpen(!open);
   };
 
   return (
@@ -64,8 +62,9 @@ export const Wishlist = () => {
             key={photo.id}
             flowerNameCZ={photo.nameCZ}
             url={photo.url}
-            description={photo.description}
+            id={photo.id}
             category={photo.category}
+            collection="wishlist"
           />
         ))}
       </div>
@@ -77,62 +76,41 @@ export const Wishlist = () => {
               className="btn--close"
               onClick={() => {
                 setOpen(!open);
-                setNewPhotos(0);
               }}
             >
               X
             </button>
-            <h4>
-              Vyber fotku tvé vysněné kytky z tvého adresáře a zapiš a její
-              jméno.
-            </h4>
+            <h4>Vyber jméno tvé vysněné kytičky</h4>
             <form onSubmit={loadToFirebase}>
               <label>
                 Název květiny:
                 <select
                   value={photoNameCZ}
-                  onChange={(event) => setPhotoNameCZ(event.target.value)}
+                  onChange={(event) => {
+                    setPhotoNameCZ(event.target.value);
+                    console.log('photoname', event.target.value);
+
+                    let flowerObject = flowers.filter(
+                      (flower) => flower.name === event.target.value,
+                    );
+                    console.log(flowerObject);
+                    setPhotoCategory(flowerObject[0].category);
+                    setFile(`assers/${event.target.value}.jpg`);
+                  }}
                 >
                   <option value="Vyberte">Vyberte</option>
                   {flowers.map((flower) => (
-                    <option value={flower}>{flower}</option>
+                    <option value={flower.name}>{flower.name}</option>
                   ))}
                 </select>
               </label>
 
-              <label>
-                Popis kytky:
-                <input
-                  value={photoDescription}
-                  onChange={(event) => setPhotoDescription(event.target.value)}
-                />
-              </label>
-
-              <label>
-                Kategorie:
-                <select
-                  value={photoCategory}
-                  onChange={(event) => setPhotoCategory(event.target.value)}
-                >
-                  <option value="Vyberte">Vyberte</option>
-                  {categories.map((category) => (
-                    <option value={category}>{category}</option>
-                  ))}
-                </select>
-              </label>
-
-              <input
-                type="file"
-                className="form__file"
-                onChange={(event) => setFile(event.target.files[0])}
-              />
-
+              {photoNameCZ !== 'Vyberte' && (
+                <label>Kategorie:{photoCategory} </label>
+              )}
               <button
-                disabled={
-                  photoCategory === 'Vyberte' ||
-                  photoNameCZ === 'Vyberte' ||
-                  photoDescription === ''
-                }
+                className="btn__loadToFirebase"
+                disabled={photoNameCZ === 'Vyberte'}
               >
                 Nahrát
               </button>

@@ -2,7 +2,7 @@ import React from 'react';
 import './style.css';
 import { useHistory } from 'react-router-dom';
 
-const Ad = ({ id, key, category, flowerNameCZ, url }) => {
+const Ad = ({ id, category, flowerNameCZ, url }) => {
   let history = useHistory();
   const handleClick = () => {
     history.push(`/detail/${id}`);

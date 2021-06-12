@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { auth } from '../firebase';
 import './style.css';
 import { useHistory, useLocation } from 'react-router-dom';
+import { db, storage } from './../firebase';
+import firebase from 'firebase';
 
 export const LogIn = () => {
   const [email, setEmail] = useState(null);
@@ -24,7 +26,13 @@ export const LogIn = () => {
       .createUserWithEmailAndPassword(email, password)
       .then((userCredential) => {
         const user = userCredential.user;
+
         console.log(`Uzivatel ${user.email} sa zaregistroval`);
+        if (user.uid != null) {
+          db.collection('users').doc(user.uid).set({
+            email: user.email,
+          });
+        }
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -79,9 +87,10 @@ export const LogIn = () => {
           <p>Prihlásenie</p>
           <div className="modal-content">
             <form id="signup-form" onSubmit={handleSubmit2}>
-              <div className="input-field">
+              <div>
                 <label>
                   <input
+                    className="input-field"
                     type="email"
                     id="signup-email"
                     required
@@ -90,9 +99,10 @@ export const LogIn = () => {
                   />
                 </label>
               </div>
-              <div className="input-field">
+              <div>
                 <label>
                   <input
+                    className="input-field"
                     type="password"
                     id="gignup-password"
                     required
@@ -122,9 +132,10 @@ export const LogIn = () => {
           <p>Registrace</p>
           <div className="modal-content">
             <form id="login-form" onSubmit={handleSubmit}>
-              <div className="input-field">
+              <div>
                 <label>
                   <input
+                    className="input-field"
                     type="email"
                     id="login-email"
                     required
@@ -133,9 +144,10 @@ export const LogIn = () => {
                   />{' '}
                 </label>
               </div>
-              <div className="input-field">
+              <div>
                 <label>
                   <input
+                    className="input-field"
                     type="password"
                     id="login-password"
                     required

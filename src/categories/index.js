@@ -1,1 +1,7 @@
-export const categories = ['Kvetoucí', 'Popínavé', 'Sukulenty', 'Řasokoule'];
+export const categories = [
+  'Kvetoucí',
+  'Popínavé',
+  'Sukulenty',
+  'Řasokoule',
+  'Bylinky',
+];

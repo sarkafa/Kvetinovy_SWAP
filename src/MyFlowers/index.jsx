@@ -42,7 +42,7 @@ export const MyFlowers = () => {
     }
 
     storage
-      .ref(`/myFlowers/${file.name}`)
+      .ref(`/myFlowers/${user.uid}/${file.name}`)
       .put(file)
       .then((snapshot) => snapshot.ref.getDownloadURL())
       .then((urlLoadedFile) => {
@@ -57,7 +57,7 @@ export const MyFlowers = () => {
         db.collection('users').doc(user.uid).collection('myFlowers').add(ad);
         db.collection('ads').add(ad);
 
-        setPhotoName('');
+        setPhotoNameCZ('');
       });
   };
 
@@ -76,6 +76,8 @@ export const MyFlowers = () => {
             url={photo.url}
             description={photo.description}
             category={photo.category}
+            id={photo.id}
+            collection="myFlowers"
           />
         ))}
       </div>
@@ -103,7 +105,7 @@ export const MyFlowers = () => {
                 >
                   <option value="Vyberte">Vyberte</option>
                   {flowers.map((flower) => (
-                    <option value={flower}>{flower}</option>
+                    <option value={flower.name}>{flower.name}</option>
                   ))}
                 </select>
               </label>
@@ -134,6 +136,7 @@ export const MyFlowers = () => {
               />
 
               <button
+                className="btn__loadToFirebase"
                 disabled={
                   photoCategory === 'Vyberte' ||
                   photoNameCZ === 'Vyberte' ||

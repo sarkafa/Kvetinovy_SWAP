@@ -27,7 +27,8 @@
   padding: 5%;
   border: solid 2px #e6c229;
 }
-input {
+
+.input-field {
   width: 80%;
   padding: 12px 20px;
   margin: 8px 0;

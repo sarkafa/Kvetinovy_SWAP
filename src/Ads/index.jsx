@@ -13,7 +13,12 @@ const Categories = ({ category, onClick }) => {
   return (
     <>
       <label className="category__label">
-        <input name="category" type="radio" onChange={onClick} />
+        <input
+          className="category__input"
+          name="category"
+          type="radio"
+          onChange={onClick}
+        />
         {category}
       </label>
     </>
@@ -130,6 +135,7 @@ export const Ads = () => {
         // setMergedUsersUnique(mergedUsersUniqueList);
 
         setMergedUsers(mergedUsersUniqueList);
+        console.log('mergedlistuniq', mergedUsersUniqueList);
       });
   }, []);
 
@@ -144,8 +150,11 @@ export const Ads = () => {
         categoryValue,
       );
     }
+    console.log('match', match);
+    console.log('myWishlist', myWishlist);
+    console.log('mergedusers', mergedUsers);
 
-    if (match && myWishlist.length === 0 && mergedUsers.length === 0) {
+    if (match && mergedUsers.length === 0) {
       return setAds([]);
     }
 

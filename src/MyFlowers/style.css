@@ -73,13 +73,13 @@ form {
   margin: 5px 0;
 }
 
-form button {
+.btn__loadToFirebase {
   max-width: 60px;
   background-color: lightseagreen;
   color: white;
   border: 1px solid rgb(28, 146, 140);
   border-radius: 2px;
-  margin: 0 0 10px 0;
+  margin: 20px 0 10px 0;
 }
 
 form button:hover,
