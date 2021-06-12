@@ -9,11 +9,11 @@
   background-color: white;
 }
 .fixed--wraper {
+  z-index: 1;
   position: fixed;
   top: 0;
-  left: 0;
   margin: auto;
-  width: 100%;
+  width: 80%;
 }
 .menu a {
   text-decoration: none;
@@ -52,19 +52,20 @@
   background-position: center;
   flex-shrink: 0;
   margin-right: 10px;
+  position: relative;
 }
 
 .logout {
-  position: fixed;
+  position: absolute;
   min-width: 150px;
-  right: 30;
-  top: 68px;
+  top: 45px;
   background-color: #e6c229;
   text-align: center;
   /* padding-top: 43px; */
   padding-left: 10px;
   padding-right: 10px;
   border-radius: 15px;
+  right: -50px;
 }
 .logout--closed {
   display: none;
@@ -109,7 +110,7 @@
 
 .menu__tabs {
   position: absolute;
-  top: 60px;
+  top: 40px;
   list-style-type: none;
   background-color: rgb(220, 220, 220);
   padding: 0;
@@ -143,6 +144,10 @@
     background-repeat: no-repeat;
     background-position: center;
     padding-right: 5px;
+  }
+
+  .logout {
+    right: 0;
   }
 
   .menu .user {

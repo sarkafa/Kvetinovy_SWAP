@@ -141,7 +141,13 @@ const Menu = () => {
                 {notification !== null ? notification.lenght : ''}
               </div>
 
-              <div className={menuOpened ? 'logout' : 'logout--closed'}>
+              <div
+                className={menuOpened ? 'logout' : 'logout--closed'}
+                onClick={() => {
+                  setMenuOpened(!menuOpened);
+                  console.log(menuOpened);
+                }}
+              >
                 <button
                   className="btn"
                   onClick={() => {
