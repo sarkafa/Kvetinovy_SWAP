@@ -6,24 +6,15 @@
   padding-top: 10px;
   padding-bottom: 10px;
   border-bottom: solid rgb(220, 220, 220) 2px;
+  background-color: white;
 }
-
-.menu ul {
-  display: flex;
-
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
+.fixed--wraper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  margin: auto;
+  width: 100%;
 }
-
-.menu li {
-  flex-basis: 1;
-  text-align: center;
-  font-weight: bold;
-  flex-grow: 1;
-  display: flex;
-}
-
 .menu a {
   text-decoration: none;
   display: block;
@@ -35,35 +26,34 @@
 }
 
 .selected {
-  background-color: #9ebaae46;
+  background-color: #28875e2e;
   border-bottom: solid 2px #28875e;
   color: black;
 }
 
 .menu .logo {
-  flex-basis: 20px;
-  background-image: url(./img/S_green.png);
+  flex-basis: 180px;
+  background-image: url(./img/logo_green.png);
   background-size: 100%;
   background-repeat: no-repeat;
   background-position: center;
-  padding-right: 5px;
 }
-
 .menu .user {
   display: flex;
   justify-content: flex-end;
+  flex-basis: 100px;
 }
 
 .menu .user__icon {
   background-image: url(./img/female.png);
-  flex-basis: 20%;
+  flex-basis: 30px;
   background-size: 100%;
   background-repeat: no-repeat;
   background-position: center;
-}
-.user__icon {
   flex-shrink: 0;
+  margin-right: 10px;
 }
+
 .logout {
   position: fixed;
   min-width: 150px;
@@ -80,6 +70,10 @@
   display: none;
 }
 
+.nav-closed {
+  display: none;
+}
+
 .logout button {
   margin: 20px;
 }
@@ -91,6 +85,7 @@
 .menu .user__name {
   display: none;
 }
+
 .notification {
   border-radius: 5px;
   background-color: white;
@@ -99,10 +94,90 @@
 .notification button {
   background-color: #28875e;
 }
-@media (min-width: 480px) {
+
+.burgerMenu {
+  position: relative;
+  fill: #28875e;
 }
 
-@media (min-width: 768px) {
+.navigation {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  flex-basis: 40px;
+}
+
+.menu__tabs {
+  position: absolute;
+  top: 60px;
+  list-style-type: none;
+  background-color: rgb(220, 220, 220);
+  padding: 0;
+}
+
+.menu__tabs a {
+  display: block;
+  color: black;
+  border-bottom: 1px solid transparent;
+  text-decoration: none;
+  text-transform: uppercase;
+  width: 10rem;
+  padding: 1rem;
+}
+
+.menu__tabs--middle {
+  display: none;
+}
+
+.selected--burgerMenu {
+  background-color: #e6c229;
+  border-bottom: solid 2px #e6c229;
+}
+
+@media (min-width: 566px) {
+  .menu .logo {
+    flex-basis: 40px;
+    margin-right: 20px;
+    background-image: url(./img/S_green.png);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    padding-right: 5px;
+  }
+
+  .menu .user {
+    flex-basis: 60px;
+  }
+
+  .menu .user__icon {
+    margin-right: 0px;
+  }
+
+  .nav-btn {
+    display: none;
+  }
+
+  .menu .menu__tabs--middle {
+    display: flex;
+    min-width: 351px;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  .navigation {
+    display: none;
+  }
+
+  .menu li {
+    flex-basis: 1;
+    text-align: center;
+    font-weight: bold;
+    flex-grow: 1;
+    display: flex;
+  }
+}
+
+@media (min-width: 800px) {
   .menu .logo {
     flex-basis: 180px;
     background-image: url(./img/logo_green.png);
@@ -115,5 +190,9 @@
     display: block;
     flex-basis: 80%;
     text-align: end;
+  }
+
+  .menu .user__icon {
+    flex-basis: 20%;
   }
 }

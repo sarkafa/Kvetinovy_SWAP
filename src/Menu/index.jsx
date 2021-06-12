@@ -55,6 +55,11 @@ const Menu = () => {
   const [menuOpened, setMenuOpened] = useState(false);
   const [signedUser, setSignedUser] = useState(null);
   const [notification, setNotification] = useState(null);
+  const [burgerMenuOpened, setBurgerMenuOpened] = useState(true);
+
+  const showNav = () => {
+    document.querySelector('nav').classList.toggle('nav-closed');
+  };
 
   auth.onAuthStateChanged(function (user) {
     if (user) {
@@ -88,61 +93,120 @@ const Menu = () => {
 
   return (
     <Router>
-      <div className="menu">
-        <div className="logo">
-          <NavLink exact to="/"></NavLink>
-        </div>
-
-        <ul className="menu__tabs">
-          <li>
-            <NavLink exact to="/" activeClassName="selected">
-              INZERÁTY
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/myflowers" activeClassName="selected">
-              MÉ KVĚTINY
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/wishlist" activeClassName="selected">
-              WISHLIST
-            </NavLink>
-          </li>
-        </ul>
-
-        <div className="user">
-          <div className="user__name">
-            <NavLink to="/login">{signedUser ? signedUser.email : ''}</NavLink>
+      <div className="fixed--wraper">
+        <div className="menu">
+          <div className="logo">
+            <NavLink exact to="/"></NavLink>
           </div>
-          <div
-            className={signedUser ? 'user__icon' : ''}
-            onClick={() => {
-              setMenuOpened(!menuOpened);
-              console.log(menuOpened);
-            }}
-          >
-            <div
-              className={
-                notification === {}
-                  ? 'notifications--number--false'
-                  : 'notifications--number'
-              }
-            >
-              {notification !== null ? notification.lenght : ''}
+
+          <ul className="menu__tabs--middle">
+            <li>
+              <NavLink exact to="/" activeClassName="selected">
+                INZERÁTY
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/myflowers" activeClassName="selected">
+                MÉ KVĚTINY
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/wishlist" activeClassName="selected">
+                WISHLIST
+              </NavLink>
+            </li>
+          </ul>
+
+          <div className="user">
+            <div className="user__name">
+              <NavLink to="/login">
+                {signedUser ? signedUser.email : ''}
+              </NavLink>
             </div>
-            <div className={menuOpened ? 'logout' : 'logout--closed'}>
-              <button
-                className="btn"
-                onClick={() => {
-                  auth.signOut().then(() => {
-                    console.log('uzivatel odhlaseny');
-                    location.href = location.origin;
-                  });
-                }}
+
+            <div
+              className={signedUser ? 'user__icon' : ''}
+              onClick={() => {
+                setMenuOpened(!menuOpened);
+                console.log(menuOpened);
+              }}
+            >
+              <div
+                className={
+                  notification === {}
+                    ? 'notifications--number--false'
+                    : 'notifications--number'
+                }
               >
-                Odhlásiť
-              </button>
+                {notification !== null ? notification.lenght : ''}
+              </div>
+
+              <div className={menuOpened ? 'logout' : 'logout--closed'}>
+                <button
+                  className="btn"
+                  onClick={() => {
+                    auth.signOut().then(() => {
+                      console.log('uzivatel odhlaseny');
+                      location.href = location.origin;
+                    });
+                  }}
+                >
+                  Odhlásiť
+                </button>
+              </div>
+            </div>
+            <div class="navigation">
+              <svg
+                className="burgerMenu"
+                onClick={() =>
+                  setBurgerMenuOpened(burgerMenuOpened ? false : true)
+                }
+                viewBox="0 0 100 80"
+                width="40"
+                height="40"
+              >
+                <rect width="100" height="20"></rect>
+                <rect y="30" width="100" height="20"></rect>
+                <rect y="60" width="100" height="20"></rect>
+              </svg>
+              <ul
+                className={`menu__tabs ${burgerMenuOpened ? 'nav-closed' : ''}`}
+              >
+                <li>
+                  <NavLink
+                    exact
+                    to="/"
+                    activeClassName="selected--burgerMenu"
+                    onClick={() =>
+                      setBurgerMenuOpened(burgerMenuOpened ? false : true)
+                    }
+                  >
+                    INZERÁTY
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/myflowers"
+                    activeClassName="selected--burgerMenu"
+                    onClick={() =>
+                      setBurgerMenuOpened(burgerMenuOpened ? false : true)
+                    }
+                  >
+                    MÉ KVĚTINY
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/wishlist"
+                    activeClassName="selected--burgerMenu"
+                    onClick={() =>
+                      setBurgerMenuOpened(burgerMenuOpened ? false : true)
+                    }
+                  >
+                    WISHLIST
+                  </NavLink>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
