@@ -57,3 +57,7 @@
   background-color: #e6c229;
   color: white;
 }
+
+.webDescription p {
+  padding: 5px 5px;
+}

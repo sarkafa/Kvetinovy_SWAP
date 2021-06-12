@@ -73,10 +73,12 @@ export const LogIn = () => {
       <div className="webDescription">
         <img src="\assets\swiss-cheese-plant-light-houseplant-photocatalysis-small-potted-plants-6194e80d43c972307b5e89c063193b2b.png" />
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio
-          corrupti cum asperiores distinctio vel nam ratione ullam unde,
-          quisquam quae cupiditate reprehenderit alias nesciunt sed eum
-          doloremque omnis! Nisi, maxime?
+          Vítejte na květinovém swapu, kde můžete s uživateli měnit svoje
+          květinové krásky za jiné.
+        </p>
+        <p>
+          Nabízené kytky přidávejte v sekci Mé květiny a doplňujte vysvěné kytek
+          pro účely matche v sekci Wishlist.
         </p>
       </div>
       <div className="formular">

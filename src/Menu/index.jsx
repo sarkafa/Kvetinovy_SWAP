@@ -125,9 +125,9 @@ const Menu = () => {
             </div>
 
             <div
-              className={signedUser ? 'user__icon' : ''}
+              className="user__icon"
               onClick={() => {
-                setMenuOpened(!menuOpened);
+                signedUser && setMenuOpened(!menuOpened);
                 console.log(menuOpened);
               }}
             >
