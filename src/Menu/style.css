@@ -71,13 +71,17 @@
   top: 68px;
   background-color: #e6c229;
   text-align: center;
-  padding-top: 43px;
+  /* padding-top: 43px; */
   padding-left: 10px;
   padding-right: 10px;
   border-radius: 15px;
 }
 .logout--closed {
   display: none;
+}
+
+.logout button {
+  margin: 20px;
 }
 
 .user {
