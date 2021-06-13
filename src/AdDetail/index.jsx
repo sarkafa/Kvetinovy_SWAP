@@ -101,11 +101,20 @@ const AdDetail = ({}) => {
     <div className="ad__detail">
       {detail !== null && (
         <>
-          <img src={detail.url} alt="" />
+          <div className="img__container">
+            <div className="responsive__small">
+              <h1>{detail !== null ? detail.nameCZ : 'Nadpis'}</h1>
+              <h3>{detail !== null ? detail.category : 'kategoria'}</h3>
+              <p>{detail !== null ? detail.description : 'popisok'}</p>
+            </div>
+            <img src={detail.url} alt="" />
+          </div>
           <div className="ad__detail--info">
-            <h1>{detail !== null ? detail.nameCZ : 'Nadpis'}</h1>
-            <h3>{detail !== null ? detail.category : 'kategoria'}</h3>
-            <p>{detail !== null ? detail.description : 'popisok'}</p>
+            <div className="responsive__big">
+              <h1>{detail !== null ? detail.nameCZ : 'Nadpis'}</h1>
+              <h3>{detail !== null ? detail.category : 'kategoria'}</h3>
+              <p>{detail !== null ? detail.description : 'popisok'}</p>
+            </div>
             {swap === false && (
               <button
                 className="btn__swap"
