@@ -3,6 +3,8 @@ import firebase from 'firebase';
 const firebaseConfig = {
   apiKey: 'AIzaSyC2pNojBLk9PJLnpD3s0CzGREEyDmvXUaI',
   authDomain: 'kvetinovy-swap.firebaseapp.com',
+  databaseURL:
+    'https://kvetinovy-swap-default-rtdb.europe-west1.firebasedatabase.app',
   projectId: 'kvetinovy-swap',
   storageBucket: 'kvetinovy-swap.appspot.com',
   messagingSenderId: '167423820753',
@@ -17,9 +19,9 @@ const storage = firebase.storage();
 const auth = firebase.auth();
 const realtime = firebase.database();
 if (location.hostname === 'localhost') {
-  db.useEmulator('localhost', 6002);
+  db.useEmulator('localhost', 4000);
   storage.useEmulator('localhost', 9199);
   auth.useEmulator('http://localhost:9099');
-  realtime.useEmulator('localhost', 9001);
+  realtime.useEmulator('localhost', 9002);
 }
 export { db, storage, auth, realtime };

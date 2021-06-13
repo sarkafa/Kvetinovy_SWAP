@@ -21,6 +21,10 @@ html {
   margin: auto;
 }
 
+button {
+  cursor: pointer;
+}
+
 @media (min-width: 480px) {
 }
 
