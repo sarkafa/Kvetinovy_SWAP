@@ -24,10 +24,10 @@
       "port": 9099
     },
     "firestore": {
-      "port": 6002
+      "port": 4000
     },
     "database": {
-      "port": 9001
+      "port": 9002
     },
     "hosting": {
       "port": 5000

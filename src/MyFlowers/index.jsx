@@ -36,6 +36,7 @@ export const MyFlowers = () => {
   }, []);
 
   const loadToFirebase = (event) => {
+    setOpen(!open);
     event.preventDefault();
     if (!file) {
       return;
@@ -54,8 +55,16 @@ export const MyFlowers = () => {
           user: user.uid,
           timeStamp: firebase.firestore.FieldValue.serverTimestamp(),
         };
-        db.collection('users').doc(user.uid).collection('myFlowers').add(ad);
-        db.collection('ads').add(ad);
+        db.collection('ads')
+          .add(ad)
+          .then((doc) => {
+            const adExtended = { ...ad, adID: doc.id };
+            db.collection('users')
+              .doc(user.uid)
+              .collection('myFlowers')
+              .add(adExtended);
+            console.log('documentID', doc.id);
+          });
 
         setPhotoNameCZ('');
       });
@@ -78,6 +87,7 @@ export const MyFlowers = () => {
             category={photo.category}
             id={photo.id}
             collection="myFlowers"
+            adID={photo.adID}
           />
         ))}
       </div>
@@ -93,15 +103,23 @@ export const MyFlowers = () => {
             >
               X
             </button>
-            <h4>
-              Vyber fotku tvé vysněné kytky z tvého adresáře a vyplň informace.
-            </h4>
+            <h4>Vyber fotku tvé kytičky a přiedej její popis.</h4>
             <form onSubmit={loadToFirebase}>
               <label>
                 Název květiny:
                 <select
                   value={photoNameCZ}
-                  onChange={(event) => setPhotoNameCZ(event.target.value)}
+                  onChange={(event) => {
+                    setPhotoNameCZ(event.target.value);
+                    console.log('photoname', event.target.value);
+
+                    let flowerObject = flowers.filter(
+                      (flower) => flower.name === event.target.value,
+                    );
+                    console.log(flowerObject);
+                    setPhotoCategory(flowerObject[0].category);
+                    setFile(`assers/${event.target.value}.jpg`);
+                  }}
                 >
                   <option value="Vyberte">Vyberte</option>
                   {flowers.map((flower) => (
@@ -109,26 +127,16 @@ export const MyFlowers = () => {
                   ))}
                 </select>
               </label>
-              <label>
-                Popis kytky:
-                <input
-                  value={photoDescription}
-                  onChange={(event) => setPhotoDescription(event.target.value)}
-                />
-              </label>
+              <label className="flower__description">Popis kytky:</label>
+              <textarea
+                value={photoDescription}
+                onChange={(event) => setPhotoDescription(event.target.value)}
+              />
 
-              <label>
-                Kategorie:
-                <select
-                  value={photoCategory}
-                  onChange={(event) => setPhotoCategory(event.target.value)}
-                >
-                  <option value="Vyberte">Vyberte</option>
-                  {categories.map((category) => (
-                    <option value={category}>{category}</option>
-                  ))}
-                </select>
-              </label>
+              {photoNameCZ !== 'Vyberte' && (
+                <label>Kategorie:{photoCategory} </label>
+              )}
+
               <input
                 type="file"
                 className="form__file"

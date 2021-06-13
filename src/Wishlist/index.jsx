@@ -29,6 +29,7 @@ export const Wishlist = () => {
   }, []);
 
   const loadToFirebase = (event) => {
+    setOpen(!open);
     event.preventDefault();
     if (!file) {
       return;
@@ -80,7 +81,7 @@ export const Wishlist = () => {
             >
               X
             </button>
-            <h4>Vyber jméno tvé vysněné kytičky</h4>
+            <h4>Vyber název tvé vyněné kytičky</h4>
             <form onSubmit={loadToFirebase}>
               <label>
                 Název květiny:
