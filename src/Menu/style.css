@@ -1,3 +1,11 @@
+.categories__container {
+  position: absolute;
+}
+
+.categories {
+  position: relative;
+}
+
 .menu {
   display: flex;
   max-width: 100%;

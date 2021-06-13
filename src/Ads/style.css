@@ -1,8 +1,17 @@
+.categories--closed {
+  display: none;
+}
+
+.categories__container {
+  background-color: #e6c229;
+}
+
 .ads {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
 }
+
 .ads__categories {
   /*border: 1px solid black;*/
   flex-basis: 20%;
@@ -12,6 +21,7 @@
   display: flex;
   flex-basis: 100%;
   flex-wrap: wrap;
+  gap: 10px;
 }
 
 .category__label {
@@ -85,6 +95,11 @@ input:checked + .slider:before {
 }
 
 @media (min-width: 566px) {
+  .categories__container {
+    display: block;
+    background-color: white;
+  }
+
   .ads__categories {
     /*border: 1px solid black;*/
     flex-basis: 20%;
@@ -93,6 +108,7 @@ input:checked + .slider:before {
   .ads__container {
     display: flex;
     flex-basis: 80%;
+
     flex-wrap: wrap;
   }
 

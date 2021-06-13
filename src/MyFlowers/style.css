@@ -108,6 +108,29 @@ form {
 
 @media (min-width: 350px) {
   .btn--open {
-    flex-basis: 50%;
+    max-width: calc(50% - 5px);
+  }
+
+  .container {
+    display: flex;
+    flex-flow: wrap;
+  }
+}
+
+@media (min-width: 680px) {
+  .btn--open {
+    max-width: calc(33.33% - 6.66px);
+  }
+}
+
+@media (min-width: 900px) {
+  .btn--open {
+    max-width: calc(25% - 7.5px);
+  }
+}
+
+@media (min-width: 1000px) {
+  .btn--open {
+    max-width: calc(20% - 8px);
   }
 }

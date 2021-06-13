@@ -16,11 +16,10 @@
 }
 
 .ad {
-  padding: 1%;
   text-align: center;
   /* border: 1px solid black; */
-  flex-basis: 220px;
-  flex-grow: 0;
+  flex-basis: 100%;
+  flex-grow: 1;
   height: 275px;
   border-bottom: 5px solid white;
 }
@@ -31,4 +30,28 @@
 
 .ad__name {
   margin: 5px 0;
+}
+
+@media (min-width: 350px) {
+  .ad {
+    max-width: calc(50% - 5px);
+  }
+}
+
+@media (min-width: 680px) {
+  .ad {
+    max-width: calc(33.33% - 6.66px);
+  }
+}
+
+@media (min-width: 900px) {
+  .ad {
+    max-width: calc(25% - 7.5px);
+  }
+}
+
+@media (min-width: 1000px) {
+  .ad {
+    max-width: calc(20% - 8px);
+  }
 }
