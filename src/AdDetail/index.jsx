@@ -73,8 +73,6 @@ const AdDetail = ({}) => {
 
   userWishlist;
 
-  console.log(`myflowers`, myFlowers);
-  console.log(`userWislist`, userWishlist);
   const handleClick = () => {
     realtime
       .ref('swaps/' + detail.user)
@@ -111,7 +109,47 @@ const AdDetail = ({}) => {
               </button>
             )}
 
-            {swap === true && (
+            {swap === true && myFlowers.length === 0 && (
+              <div>
+                Nejprve musíš přidat květinu pro swap v sekci Mé květiny.
+              </div>
+            )}
+
+            {swap === true && myFlowers.length === 1 && (
+              <>
+                <div
+                  className={`carousel__image--one ${
+                    isSelected === myFlowers[index1].id
+                      ? 'carousel__image--selected'
+                      : ''
+                  }`}
+                  style={{
+                    backgroundImage: `url(${myFlowers[index1].url})`,
+                  }}
+                  onClick={() => {
+                    setIsSelected(myFlowers[index1].id);
+                  }}
+                >
+                  {userWishlist.find(
+                    (flower) => flower.nameCZ === myFlowers[index1].nameCZ,
+                  ) && (
+                    <img
+                      className="swap__image"
+                      src={'/assets/swap.svg'}
+                      alt=""
+                    />
+                  )}
+                </div>
+
+                <button className="btn__swap" onClick={handleClick}>
+                  {sendSwap
+                    ? 'Tvoja kytka sa už teší na nového majiteľa'
+                    : 'Navrhni výmenu'}
+                </button>
+              </>
+            )}
+
+            {swap === true && myFlowers.length > 1 && (
               <>
                 <div className="carousel">
                   <button
@@ -125,6 +163,7 @@ const AdDetail = ({}) => {
                   >
                     ←
                   </button>
+
                   <div className="carousel__media">
                     <div
                       className={`carousel__image--left ${
