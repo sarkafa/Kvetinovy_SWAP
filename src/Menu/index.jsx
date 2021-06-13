@@ -13,6 +13,7 @@ import {
   Switch,
   Redirect,
   useHistory,
+  Link,
 } from 'react-router-dom';
 
 const PrivateRoute = ({ children, ...rest }) => {
@@ -36,16 +37,16 @@ const PrivateRoute = ({ children, ...rest }) => {
   );
 };
 
-const Notification = ({ offeredFlower, adFlower }) => {
-  const history = useHistory();
-  const handleClick = () => {
-    history.push(`/detail/${offeredFlower.id}`);
-  };
+const Notification = ({ offeredFlower, adFlower, swapperID }) => {
   return (
     <div className="notification">
-      Používateľ {offeredFlower.user} chce s vami zameniť {adFlower.nameCZ} za
-      <span onClick={handleClick}> {offeredFlower.nameCZ}</span>
-      <button>✓</button> <button>x</button>
+      <div>
+        Používateľ {swapperID} chce s vami zameniť {adFlower.nameCZ} za
+        <Link to={`/detail/${offeredFlower.id}`}>{offeredFlower.nameCZ}</Link>
+      </div>
+      <div className="notification__buttons">
+        <button>✓</button> <button>x</button>{' '}
+      </div>
     </div>
   );
 };
@@ -78,12 +79,8 @@ const Menu = () => {
       .get()
       .then((snapshot) => {
         if (snapshot.exists()) {
-          //console.log(snapshot.val());
           console.log(Object.values(snapshot.val()));
           setNotification(Object.values(snapshot.val()));
-          //const n = snapshot.val();
-          //setNotification(n);
-          //console.log(n);
         } else {
           console.log('No data available');
         }
@@ -239,10 +236,3 @@ const Menu = () => {
 };
 
 export default Menu;
-/*{notification.map((n) => (
-  <Notification
-    offeredFlower={n.offeredFlower}
-    adFlower={n.adFlower}
-  />
-))}
-;*/

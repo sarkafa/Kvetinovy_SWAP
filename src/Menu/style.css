@@ -59,12 +59,11 @@
   position: absolute;
   min-width: 150px;
   top: 68px;
-  background-color: #e6c229;
+  background-color: rgb(220, 220, 220);
   text-align: center;
   /* padding-top: 43px; */
   padding-left: 10px;
   padding-right: 10px;
-  border-radius: 15px;
   right: -50px;
 }
 .logout--closed {
@@ -86,19 +85,38 @@
 .menu .user__name {
   display: none;
 }
-
+.notification__buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+}
 .notification {
-  border-radius: 5px;
-  background-color: white;
+  display: flex;
+  font-family: Inter;
+  font-size: 14px;
   margin-bottom: 5px;
+  border-bottom: 1px solid #ccc;
+  padding: 15px;
+  text-align: center;
+  gap: 10px;
 }
 .notification button {
   background-color: lightseagreen;
   color: white;
   border: 1px solid rgb(28, 146, 140);
-  border-radius: 2px;
-  margin: 10px 0 10px 0;
+  border-radius: 50%;
+  margin: 0;
   cursor: pointer;
+  width: 32px;
+  height: 32px;
+}
+
+.notification button:focus,
+.notification button:hover,
+.btn-logout:focus,
+.btn-logout:hover {
+  background-color: rgb(28, 146, 140);
 }
 .btn-logout {
   background-color: lightseagreen;
@@ -112,7 +130,7 @@
 }
 .notifications--number {
   position: absolute;
-  right: -3px;
+  right: -5px;
   top: 0;
   border-radius: 50%;
   background-color: #e6c229;
@@ -120,6 +138,7 @@
   text-align: center;
   width: 3vh;
   padding: 1px;
+  line-height: 22px;
 }
 
 .burgerMenu {

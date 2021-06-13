@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './style.css';
 import { useParams } from 'react-router-dom';
-import { db, realtime } from '../firebase';
+import { db, realtime, auth } from '../firebase';
 import firebase from 'firebase';
 import FlowerItem from '../FlowerItem';
 
@@ -17,6 +17,14 @@ const AdDetail = ({}) => {
   const [forSwap, setForSwap] = useState([]);
   const [sendSwap, setSendSwap] = useState(false);
   const user = firebase.auth().currentUser;
+
+  const [signedUser, setSignedUser] = useState(null);
+  auth.onAuthStateChanged(function (user) {
+    if (user) {
+      setSignedUser(user);
+      console.log(signedUser);
+    }
+  });
 
   useEffect(() => {
     let adDetail = db;
@@ -78,7 +86,7 @@ const AdDetail = ({}) => {
       .ref('swaps/' + detail.user)
       .push()
       .set({
-        swapperID: user.uid,
+        swapperID: signedUser.email,
         adFlower: detail,
         offeredFlower: myFlowers.find((flower) => flower.id === isSelected),
       });
