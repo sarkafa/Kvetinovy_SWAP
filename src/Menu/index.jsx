@@ -42,10 +42,15 @@ const Notification = ({ offeredFlower, adFlower, swapperID }) => {
     <div className="notification">
       <div>
         Používateľ {swapperID} chce s vami zameniť {adFlower.nameCZ} za
-        <Link to={`/detail/${offeredFlower.id}`}>{offeredFlower.nameCZ}</Link>
+        <Link
+          to={`/detail/${offeredFlower.adID}`}
+          className="offeredFlowerLink link"
+        >
+          {offeredFlower.nameCZ}
+        </Link>
       </div>
       <div className="notification__buttons">
-        <button>✓</button> <button>x</button>{' '}
+        <button>✓</button> <button>x</button>
       </div>
     </div>
   );
@@ -144,6 +149,7 @@ const Menu = () => {
                   <Notification
                     offeredFlower={n.offeredFlower}
                     adFlower={n.adFlower}
+                    swapperID={n.swapperID}
                   />
                 ))}
                 <button

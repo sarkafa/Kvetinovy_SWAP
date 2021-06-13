@@ -25,6 +25,9 @@
   text-align: center;
 }
 
+.offeredFlowerLink.link {
+  color: lightseagreen;
+}
 .selected {
   background-color: #28875e2e;
   border-bottom: solid 2px #28875e;
