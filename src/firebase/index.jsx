@@ -3,6 +3,8 @@ import firebase from 'firebase';
 const firebaseConfig = {
   apiKey: 'AIzaSyC2pNojBLk9PJLnpD3s0CzGREEyDmvXUaI',
   authDomain: 'kvetinovy-swap.firebaseapp.com',
+  databaseURL:
+    'https://kvetinovy-swap-default-rtdb.europe-west1.firebasedatabase.app',
   projectId: 'kvetinovy-swap',
   storageBucket: 'kvetinovy-swap.appspot.com',
   messagingSenderId: '167423820753',
