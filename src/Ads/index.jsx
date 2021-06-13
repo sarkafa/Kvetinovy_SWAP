@@ -3,7 +3,7 @@ import './style.css';
 import { Router, Route, NavLink, Switch } from 'react-router-dom';
 import { db, storage } from './../firebase';
 import Ad from '../Ad/index';
-import { categories } from '.././categories';
+import { flowers } from '.././flowers';
 import firebase from 'firebase';
 import { MyFlowers } from '../MyFlowers';
 
@@ -29,6 +29,7 @@ export const Ads = () => {
   const [match, setMatch] = useState(false);
   const [mergedUsers, setMergedUsers] = useState([]);
   const [myWishlist, setMyWishlist] = useState([]);
+  const [categoriesOpen, setCategoriesOpen] = useState(true);
 
   const user = firebase.auth().currentUser;
 
@@ -150,7 +151,7 @@ export const Ads = () => {
     }
     console.log('match', match);
     console.log('myWishlist', myWishlist);
-    console.log('mergedusers', mergedUsers);
+    console.log('categoryvalue', categoryValue);
 
     if (match && mergedUsers.length === 0) {
       return setAds([]);
@@ -168,6 +169,7 @@ export const Ads = () => {
           ...doc.data(),
           id: doc.id,
         }));
+        console.log('adsData', adsData);
 
         if (match && myWishlist.length > 0 && mergedUsers.length > 0) {
           adsData = adsData.filter((doc) => myWishlist.includes(doc.nameCZ));
@@ -185,31 +187,44 @@ export const Ads = () => {
     <>
       <div className="ads">
         <div className="ads__categories">
-          <p>Kategorie</p>
-          <Categories
-            category="Všechny"
-            onClick={() => {
-              setCategoryValue(null);
-            }}
-          />
-          {categories.map((category) => (
+          <p
+            className="categories"
+            onClick={() => setCategoriesOpen(!categoriesOpen)}
+          >
+            Kategorie
+          </p>
+          <div
+            className={`categories__container ${
+              categoriesOpen ? 'categories--closed' : ''
+            }`}
+          >
             <Categories
-              category={category}
-              key={category}
+              category="Všechny"
               onClick={() => {
-                setCategoryValue(category);
+                setCategoryValue(null);
               }}
             />
-          ))}
+            {Array.from(new Set(flowers.map((f) => f.category))).map(
+              (category) => (
+                <Categories
+                  category={category}
+                  key={category}
+                  onClick={() => {
+                    setCategoryValue(category);
+                  }}
+                />
+              ),
+            )}
 
-          <p>Match</p>
-          <label className="switch">
-            <input
-              type="checkbox"
-              onClick={() => setMatch(match ? false : true)}
-            />
-            <span className="slider round"></span>
-          </label>
+            <p>Match</p>
+            <label className="switch">
+              <input
+                type="checkbox"
+                onClick={() => setMatch(match ? false : true)}
+              />
+              <span className="slider round"></span>
+            </label>
+          </div>
         </div>
         <div className="ads__container">
           {ads.map((ad) => (
