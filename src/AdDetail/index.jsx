@@ -259,11 +259,14 @@ const AdDetail = ({}) => {
                     →
                   </button>
                 </div>
-                <button className="btn__swap" onClick={handleClick}>
-                  {sendSwap
-                    ? 'Tvoja kytka sa už teší na nového majiteľa'
-                    : 'Navrhni výmenu'}
-                </button>
+
+                {sendSwap ? (
+                  'Tvoja kytka sa už teší na nového majiteľa'
+                ) : (
+                  <button className="btn__swap" onClick={handleClick}>
+                    Navrhni výmenu
+                  </button>
+                )}
               </>
             )}
           </div>

@@ -9,16 +9,24 @@
   padding: 5vw;
   display: flex;
   justify-content: space-between;
+  text-align: center;
 }
 .ad__detail .img__container {
   max-width: 100%;
 }
+
+.img__container img {
+  max-width: 100%;
+}
+
 .ad__detail--info {
   flex-basis: 100%;
-  text-align: left;
   padding: 0 20px;
+  text-align: center;
 }
-.ad__detail--info h1 {
+
+.ad__detail--info h1,
+.responsive__small h1 {
   color: #e6c229;
   font-family: 'Lora';
   font-style: italic;
