@@ -15,7 +15,6 @@ const AdDetail = ({}) => {
   const [isSwap, setIsSwap] = useState(false);
   const [userWishlist, setUserWishlist] = useState([]);
   const [forSwap, setForSwap] = useState([]);
-
   const [sendSwap, setSendSwap] = useState(false);
   const user = firebase.auth().currentUser;
 

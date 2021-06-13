@@ -63,11 +63,12 @@
 }
 .user__icon {
   flex-shrink: 0;
+  position: relative;
 }
 .logout {
   position: fixed;
   min-width: 150px;
-  right: 30;
+
   top: 68px;
   background-color: #e6c229;
   text-align: center;
@@ -93,7 +94,33 @@
   margin-bottom: 5px;
 }
 .notification button {
-  background-color: #28875e;
+  background-color: lightseagreen;
+  color: white;
+  border: 1px solid rgb(28, 146, 140);
+  border-radius: 2px;
+  margin: 10px 0 10px 0;
+  cursor: pointer;
+}
+.btn-logout {
+  background-color: lightseagreen;
+  color: white;
+  border: 1px solid rgb(28, 146, 140);
+  border-radius: 2px;
+  margin: 20px 0 10px 0;
+}
+.notifications--number--false {
+  display: none;
+}
+.notifications--number {
+  position: absolute;
+  right: -3px;
+  top: 0;
+  border-radius: 50%;
+  background-color: #e6c229;
+  color: white;
+  text-align: center;
+  width: 3vh;
+  padding: 1px;
 }
 @media (min-width: 480px) {
 }

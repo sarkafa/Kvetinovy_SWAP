@@ -110,13 +110,14 @@ export const LogIn = () => {
                     onChange={(event) => setPassword(event.target.value)}
                   />
                 </label>
+
+                <button className="btn-signIn">Prihlásiť</button>
               </div>
-              <button className="btn form__btn">Prihlásiť</button>
             </form>
           </div>
           <div>Ešte nemáte účet?</div>
           <button
-            className="btn"
+            className="btn-login"
             onClick={() => {
               setRegistration(false);
             }}
@@ -155,8 +156,9 @@ export const LogIn = () => {
                     onChange={(event) => setPassword(event.target.value)}
                   />
                 </label>
+
+                <button className="btn-signIn">Zaregistrovať</button>
               </div>
-              <button className="btn">Zaregistrovať</button>
             </form>
           </div>
         </div>

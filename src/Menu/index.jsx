@@ -54,7 +54,7 @@ const Menu = () => {
   const user = auth.currentUser;
   const [menuOpened, setMenuOpened] = useState(false);
   const [signedUser, setSignedUser] = useState(null);
-  const [notification, setNotification] = useState(null);
+  const [notification, setNotification] = useState([]);
 
   auth.onAuthStateChanged(function (user) {
     if (user) {
@@ -69,14 +69,16 @@ const Menu = () => {
     let notifications = realtime.ref();
     notifications
       .child('swaps')
-      .child('oAi5bO3q32BeUBDGfL5We2hJtUPF')
-      //.child(signedUser.uid)
+      .child(signedUser.uid)
       .get()
       .then((snapshot) => {
         if (snapshot.exists()) {
-          console.log(snapshot.val());
-          //setNotification(snapshot.val());
-          //console.log(notification);
+          //console.log(snapshot.val());
+          console.log(Object.values(snapshot.val()));
+          setNotification(Object.values(snapshot.val()));
+          //const n = snapshot.val();
+          //setNotification(n);
+          //console.log(n);
         } else {
           console.log('No data available');
         }
@@ -124,16 +126,22 @@ const Menu = () => {
           >
             <div
               className={
-                notification === {}
+                notification.length === 0
                   ? 'notifications--number--false'
                   : 'notifications--number'
               }
             >
-              {notification !== null ? notification.lenght : ''}
+              {notification.length === 0 ? '' : notification.length}
             </div>
             <div className={menuOpened ? 'logout' : 'logout--closed'}>
+              {notification.map((n) => (
+                <Notification
+                  offeredFlower={n.offeredFlower}
+                  adFlower={n.adFlower}
+                />
+              ))}
               <button
-                className="btn"
+                className="btn-logout"
                 onClick={() => {
                   auth.signOut().then(() => {
                     console.log('uzivatel odhlaseny');
