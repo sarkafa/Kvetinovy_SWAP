@@ -152,6 +152,7 @@ export const Ads = () => {
     console.log('match', match);
     console.log('myWishlist', myWishlist);
     console.log('categoryvalue', categoryValue);
+    console.log('mergedusers', mergedUsers);
 
     if (match && mergedUsers.length === 0) {
       return setAds([]);

@@ -212,6 +212,7 @@
 
   .menu .user__icon {
     margin-right: 0px;
+    cursor: pointer;
   }
 
   .nav-btn {

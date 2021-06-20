@@ -28,12 +28,19 @@ export const flowers = [
     category: 'Řasokoule',
   },
   {
-    name: 'Kaktus Pilocereus',
+    name: 'Kaktus',
     category: 'Sukulenty',
   },
+  {
+    name: 'Orchidej',
+    category: 'Kvetoucí',
+  },
+  {
+    name: 'Avokádo',
+    category: 'Nekvetoucí',
+  },
+  {
+    name: 'Šplhavnice',
+    category: 'Popínavé',
+  },
 ];
-//   'Pampeliska',
-//   'Kapradina',
-//   'Sedmikráska',
-//   'Vánoční Hvězda',
-// ];

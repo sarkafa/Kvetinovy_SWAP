@@ -1,3 +1,8 @@
+.categories,
+.category__input {
+  cursor: pointer;
+}
+
 .categories--closed {
   display: none;
 }
@@ -28,6 +33,7 @@
   flex-basis: 100%;
   display: block;
   padding: 5px 0;
+  cursor: pointer;
 }
 
 .ads__categories p {
@@ -100,21 +106,25 @@ input:checked + .slider:before {
     background-color: white;
   }
 
-  .ads__categories {
-    /*border: 1px solid black;*/
-    flex-basis: 20%;
+  .categories {
+    cursor: default;
   }
+}
 
-  .ads__container {
-    display: flex;
-    flex-basis: 80%;
+.ads__categories {
+  /*border: 1px solid black;*/
+  flex-basis: 20%;
+}
 
-    flex-wrap: wrap;
-  }
+.ads__container {
+  display: flex;
+  flex-basis: 80%;
 
-  .category__label {
-    flex-basis: 100%;
-    display: block;
-    padding: 5px 0;
-  }
+  flex-wrap: wrap;
+}
+
+.category__label {
+  flex-basis: 100%;
+  display: block;
+  padding: 5px 0;
 }

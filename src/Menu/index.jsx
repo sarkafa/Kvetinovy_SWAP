@@ -81,17 +81,13 @@ const Menu = () => {
     notifications
       .child('swaps')
       .child(signedUser.uid)
-      .get()
-      .then((snapshot) => {
+      .on('value', (snapshot) => {
         if (snapshot.exists()) {
           console.log(Object.values(snapshot.val()));
           setNotification(Object.values(snapshot.val()));
         } else {
           console.log('No data available');
         }
-      })
-      .catch((error) => {
-        console.error(error);
       });
   }, [signedUser]);
 
